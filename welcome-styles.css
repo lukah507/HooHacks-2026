@@ -8,7 +8,7 @@
 /* Design Tokens */
 :root {
   --cream:  #FCF9EA;
-  --blush:  #F2C4C4;
+  --blush:  #f2c9c4;
   --rose:   #D97B7B;
   --rose-lighter:#ec9a9a;
   --deep:   #2B1A1A;
@@ -138,12 +138,9 @@ header h1 {
     width: 30%;
     height: 100%;
     border-radius: 15px;
-    background-color: var(--blush);
+    background-color: rgba(255,255,255,0.5);
     padding: 1rem;
     margin: 1rem;
-    border-color: var(--muted);
-    border-style: solid;
-    border-width: 1px;
     align-items: center;
     justify-content: center;
     display: flex;
