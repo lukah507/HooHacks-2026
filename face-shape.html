@@ -261,13 +261,13 @@
 <script src="face-data.js"></script>
 <script>
 const SHAPES = [
-  { key: 'oval',      label: 'Oval',      emoji: '🥚', tagline: 'face length greater than width, balanced proportions' },
-  { key: 'round',     label: 'Round',     emoji: '🔵', tagline: 'face nearly as wide as it is long, soft curves' },
-  { key: 'square',    label: 'Square',    emoji: '🟦', tagline: 'strong jawline, forehead and jaw similar width' },
-  { key: 'heart',     label: 'Heart',     emoji: '🫀', tagline: 'wider forehead tapering to a narrow pointed chin' },
-  { key: 'diamond',   label: 'Diamond',   emoji: '💎', tagline: 'wide cheekbones, narrow forehead and chin' },
-  { key: 'rectangle', label: 'Rectangle', emoji: '▬',  tagline: 'face length greatest, forehead and jaw similar width' },
-  { key: 'triangle',  label: 'Triangle',  emoji: '🔺', tagline: 'wider jawline, narrowing toward the forehead' },
+  { key: 'oval',      label: 'Oval',      emoji: '🥚', tagline: 'face length greater than width, balanced proportions', image:'/assets/images/oval-face.png' },
+  { key: 'round',     label: 'Round',     emoji: '🔵', tagline: 'face nearly as wide as it is long, soft curves', image:'/assets/images/circle-face.png' },
+  { key: 'square',    label: 'Square',    emoji: '🟦', tagline: 'strong jawline, forehead and jaw similar width', image:'/assets/images/square-face.png' },
+  { key: 'heart',     label: 'Heart',     emoji: '🫀', tagline: 'wider forehead tapering to a narrow pointed chin', image:'/assets/images/heart-face.png' },
+  { key: 'diamond',   label: 'Diamond',   emoji: '💎', tagline: 'wide cheekbones, narrow forehead and chin', image:'/assets/images/diamond-face.png' },
+  { key: 'rectangle', label: 'Rectangle', emoji: '▬',  tagline: 'face length greatest, forehead and jaw similar width', image:'/assets/images/rectangle-face.png' },
+  { key: 'triangle',  label: 'Triangle',  emoji: '🔺', tagline: 'wider jawline, narrowing toward the forehead', image:'/assets/images/triangle-face.png' },
 ];
 
 let selectedShape = null;
@@ -323,7 +323,7 @@ function buildShapeCards() {
 
     card.innerHTML = `
       <span class="shape-checkmark">✓</span>
-      <span class="shape-emoji">${shape.emoji}</span>
+      <span class="shape-emoji"><img src="${shape.image}" style="width:45%; height:45%;"/></span>
       <div class="shape-name">${shape.label}</div>
       <div class="shape-tagline">${shape.tagline}</div>
       <span class="expand-hint">▾ tap to read characteristics</span>
@@ -470,7 +470,7 @@ function renderResult(shapeKey) {
   btnRow.className = 'btn-row';
   btnRow.innerHTML = `
     <button class="btn btn-ghost" onclick="resetShape()">← Pick again</button>
-    <button class="btn btn-ghost" onclick="window.location.href='index.html'">↩ Start over</button>
+    <button class="btn btn-ghost" onclick="window.location.href='index.html'">Return to Home</button>
     <button class="btn btn-rose" onclick="window.location.href='body-shape.html'">Body shape →</button>
   `;
   main.appendChild(btnRow);
