@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Persona Palette | Home</title>
   <link href="https://fonts.googleapis.com/css2?family=Stoke:wght@400&family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-  <link href="styles.css" rel="stylesheet" />
+  <link href="welcome-styles.css" rel="stylesheet" />
   <script src="/layout.js"></script>
   <link rel="icon" href="/assets/images/icon.png">
 </head>
@@ -13,20 +13,31 @@
   <div id="main-area">
     <div style="background: linear-gradient(to bottom, #D97B7B, #F2C4C4);">
       <div class="welcome-container">
-          <h1 class="page-title" style="margin-bottom: 20px; margin-top: -160px;">Welcome to<br>Persona Palette!</h1>
+          <h1 class="page-title">Welcome to<br>Persona Palette!</h1>
           <p class="welcome-text" style="font-weight: bold;">Created by Luka He and Chloe Toda</p>
           <p class="welcome-text" style="font-weight: bold; margin-top:10px;">Are you ready to find your perfect color palette? Want to dress to really impress? Look no further and take control of your style with our personalized color analysis!</p>
-          <button class="btn btn-rose" style="font-size: 1.3rem; padding: 18px 40px; margin-top: 25px;" onclick="window.location.href='/add_photo.html'">
-              Get Started
+          <button class="btn btn-start" style="font-size: 1.3rem; padding: 18px 40px; margin-top: 25px;" onclick="window.location.href='/add_photo.html'">
+              GET STARTED
           </button>
-          <button onClick="handleClick()" class="btn btn-ghost" style="font-size: 1rem; margin-top: 15px; border: none;">              Learn More &#8595;
+          <button onClick="handleClick()" class="btn btn-learn" style="font-size: 1rem; margin-top: 15px; border: none;">              Learn More &#8595;
           </button>
       </div>
 
       <div id="learn-more-container">
-          <h1 class="page-title" style="margin-bottom: 20px; color: var(--deep);">What is <br>Persona Palette?</h1>
-          <p class="welcome-text" style="font-weight: bold; color: var(--deep);">Persona Palette is a comprehensive styling tool that helps you look your best by analyzing your unique seasonal colors and body shape using the 12-season color system. The system provides tailored recommendations on clothing combinations, ideal metals, and flattering silhouettes while identifying specific styles to avoid. By integrating face shape and jewelry analysis, it offers a complete, data-driven approach to personal branding and professional presentation. <br> The 12-season color analysis system is based on the Munsell color theory, which evaluates the hue, value, and chrome of different facial features. Hue determines whether your skin undertone is warm or cool. Value measures how light or dark your skin is. Chroma, or clarity, identifies whether your face is more bright and clear or more soft and muted. To find your place within the system, you must first identify your primary characteristic, such as extreme coolness, striking brightness, or a soft, blended appearance. The ultimate goal of this analysis is to achieve a look where your clothing and complexion complement each other greatly. When you wear your correct season, your skin appears clearer and your eyes brighter; conversely, wearing the wrong colors can make you appear sallow or washed out, as the clothes "arrive" in the room before you do.
-</p>
+          <h1 class="page-title" style="margin: 60px 0 40px 0; color: var(--deep);">What is Persona Palette?</h1>
+          <div class="flex-center">
+            <div class="flex-child learn-text">
+              Persona Palette is a comprehensive styling tool that helps you look your best by analyzing your unique seasonal colors and body shape using the 12-season color system. The system provides tailored recommendations on clothing combinations, ideal metals, and flattering silhouettes while identifying specific styles to avoid. By integrating face shape and jewelry analysis, it offers a complete, data-driven approach to personal branding and professional presentation.
+            </div>
+
+            <div class="flex-child learn-text">
+              The 12-season color analysis system is based on the Munsell color theory, which evaluates the hue, value, and chrome of different facial features. Hue determines whether your skin undertone is warm or cool. Value measures how light or dark your skin is. Chroma, or clarity, identifies whether your face is more bright and clear or more soft and muted.
+            </div>
+
+            <div class="flex-child learn-text">
+              To find your place within the system, you must first identify your primary characteristic, such as extreme coolness, striking brightness, or a soft, blended appearance. The ultimate goal of this analysis is to achieve a look where your clothing and complexion complement each other greatly. When you wear your correct season, your skin appears clearer and your eyes brighter; conversely, wearing the wrong colors can make you appear sallow or washed out, as the clothes "arrive" in the room before you do.
+            </div>
+          </div>
       </div>
     </div>
   </div>
