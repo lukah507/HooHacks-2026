@@ -127,6 +127,7 @@ main {
     text-align: center;
     line-height: 1.2;
     color: var(--deep);
+    transform: translate(0,5px);
 }
 
 #main-content .page-title {
@@ -136,20 +137,12 @@ main {
 
 .instructions {
   max-width: 600px;
+  margin-top: -4px;
   text-align: center;
-  font-size: 1.2rem;
-  color: var(--muted);
+  font-size: 1.25rem;
+  color: var(--deep);
   line-height: 1.8;
   letter-spacing: 0.03em;
-  font-weight: bolder;
-}
-.instructions strong {
-  display: block;
-  font-size: 1.2rem;
-  color: var(--deep);
-  margin-bottom: 8px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   font-weight: bolder;
 }
 
@@ -186,13 +179,13 @@ main {
   color: var(--rose);
 }
 .label-text {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--muted);
   letter-spacing: 0.06em;
 }
 .label-text span {
   display: block;
-  font-size: 1rem;
+  font-size: 1.1rem;
   margin-top: 4px;
   opacity: 0.7;
 }
@@ -219,7 +212,7 @@ main {
   width: 100%;
   max-width: 400px;
   color: var(--muted);
-  font-size: 1rem;
+  font-size: 1.2rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -243,8 +236,13 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: opacity 0.18s, transform 0.12s;
+  transition: transform 0.3s;
 }
+
+.btn:hover {
+  transform: scale(1.2);
+}
+
 .btn:active {
   transform: scale(0.97);
 }
