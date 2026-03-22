@@ -441,6 +441,7 @@ function classifySeason(colors) {
   };
 
   const subSeason = subMap[season]?.[runner] || subMap[season]?.[season];
+  console.log(subSeason);
 
   return { season, subSeason, scores, isWarm, isCool, isDeep, isLight, isVivid, isMuted, contrast };
 }
@@ -467,7 +468,6 @@ const SEASON_DATA = {
     badgeBg: '#FFD49A',
     badgeColor: '#7A4A10',
     emoji: '🌸',
-    description: 'You radiate warmth and vitality. Your colouring has a golden, peachy quality — think sunlit skin, bright eyes, and hair with warm golden or reddish tones. You suit colours that feel fresh, warm, and luminous.',
     traits: [
       { icon: '☀️', text: 'Warm undertone — your veins appear greenish' },
       { icon: '✨', text: 'Light to medium colouring with bright contrast' },
@@ -501,7 +501,6 @@ const SEASON_DATA = {
     badgeBg: '#AACFE0',
     badgeColor: '#1A3A5C',
     emoji: '🌊',
-    description: 'You have a soft, cool, and romantic quality. Your colouring is delicate — cool or ashy undertones, often with muted, dusty tones rather than vivid pigment. You look best in colours that share this whisper-soft elegance.',
     traits: [
       { icon: '🫧', text: 'Cool undertone — your veins appear blue or purple' },
       { icon: '🌫️', text: 'Light to medium colouring, often slightly muted' },
@@ -535,7 +534,6 @@ const SEASON_DATA = {
     badgeBg: '#C4956A',
     badgeColor: '#FFF5E8',
     emoji: '🍂',
-    description: 'You embody the richness of the harvest season. Your colouring has a warm, earthy depth — bronze skin, golden-brown to auburn hair, and eyes like amber or dark chocolate. You suit colours drawn from nature: terracotta, mustard, forest green, and deep rust.',
     traits: [
       { icon: '🔥', text: 'Warm, golden or olive undertone' },
       { icon: '🌰', text: 'Medium to deep colouring with rich, muted tones' },
@@ -569,7 +567,6 @@ const SEASON_DATA = {
     badgeBg: '#3A3A5C',
     badgeColor: '#E8E8FF',
     emoji: '❄️',
-    description: 'You have a striking, high-contrast presence. Your colouring is bold — cool or neutral undertones, deep or very fair skin, and dark or strikingly light hair. You are made for the drama of true black, pure white, and jewel tones.',
     traits: [
       { icon: '💎', text: 'Cool or neutral undertone, often with blue or pink cast' },
       { icon: '⚡', text: 'High contrast between skin, hair, and eyes' },
@@ -639,7 +636,7 @@ function renderAnalysis(colors) {
     </div>
     <div class="season-name">${capitalize(result.season)}</div>
     <div class="season-sub">${result.subSeason}</div>
-    <p class="season-desc">${data.description}</p>
+    
     <div class="your-colors-row">
       ${['face','eyes','lips','hair'].map(f => `
         <div class="your-color-chip">
@@ -714,25 +711,6 @@ function renderAnalysis(colors) {
     </div>
   `;
   main.appendChild(avoidSection);
-
-  // ── Colour harmonies (generated from skin tone)
-  const harmSection = makeSection('Colour harmonies based on your skin tone');
-  harmSection.innerHTML += `
-    <p style="font-size:0.76rem; color:var(--muted); margin-bottom:18px; line-height:1.6; letter-spacing:0.03em;">
-      These combinations are mathematically harmonious with your face colour (${colors.face.toUpperCase()}).
-    </p>
-    <div class="harmonies-grid">
-      ${Object.entries(harmonies).map(([name, swatches]) => `
-        <div class="harmony-card">
-          <div class="harmony-title">${name}</div>
-          <div class="harmony-swatches">
-            ${swatches.map(s => `<div class="harmony-dot" style="background:${s}"></div>`).join('')}
-          </div>
-        </div>
-      `).join('')}
-    </div>
-  `;
-  main.appendChild(harmSection);
 
   // ── Action buttons
   const btnRow = document.createElement('div');
