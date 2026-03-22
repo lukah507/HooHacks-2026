@@ -51,7 +51,7 @@ html, body {
     text-align: center;
     font-size: 1.25rem;
     font-family: 'Cormorant Garamond', serif;
-    color: var(--muted);
+    color: var(--cream);
     line-height: 1.8;
     letter-spacing: 0.03em;
 }
@@ -74,7 +74,7 @@ header {
   background: linear-gradient(to right, #FCF9EA, #FFF7F8);
 }
 header h1 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Stoke', serif;
   font-weight: 300;
   font-size: 1.8rem;
   letter-spacing: 0.06em;
@@ -112,11 +112,12 @@ main {
 /* Typography */
 .page-title {
   font-family: 'Stoke', serif;
-  font-size: 2.4rem;
-  font-weight: 400;
+  font-size: 3rem;
+  font-weight: 500;
   letter-spacing: 0.04em;
   text-align: center;
   line-height: 1.2;
+  color: var(--cream);
 }
 #main-content .page-title {
   font-size: 2.2rem;
@@ -239,12 +240,12 @@ main {
   color: var(--cream);
 }
 .btn-rose {
-  background: #8f6b6b;
+  background: #a44351;
   color: #FFF7F8;
   font-weight: bold;
 }
 .btn-ghost {
-  background: rgba(255, 247, 248, 0.5);
+  background: transparent;
   color: var(--deep);
   border: 1px solid rgba(255, 247, 248, 0.5);
   font-weight: bold;
