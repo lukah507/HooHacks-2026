@@ -58,5 +58,5 @@ const nesting = getNestingString();
 const headerEl = `
 	<header id='header' style="position: fixed; top: 0; left: 0; right: 0; background-color: var(--cream); z-index: 100; width: 100%; padding: 28px 40px 20px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--border);">
         <img src="/assets/images/heading-icon.png" style="width: 27px; height: 100%;" />
-        <h1 style="font-family: 'Stoke', serif; font-weight: 150; font-size: 1.5rem; letter-spacing: 0.06em;"><a href="/index.html" style="text-decoration:none; color: var(--deep); vertical-align: top;">Persona Palette</a></h1>
+        <h1 style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 1.8rem; letter-spacing: 0.06em;"><a href="/index.html" style="text-decoration:none; color: var(--deep); vertical-align: top;">Persona Palette</a></h1>
     </header>`;
