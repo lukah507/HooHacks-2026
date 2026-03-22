@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Season — Seasonal Color Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="styles.css" rel="stylesheet" />
+  <style>
+    /* ── Analysis page extras ── */
+    .analysis-hero {
+      width: 100%;
+      max-width: 680px;
+      border-radius: 20px;
+      padding: 48px 40px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .analysis-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: inherit;
+      filter: blur(0);
+      z-index: 0;
+    }
+    .analysis-hero * { position: relative; z-index: 1; }
+
+    .season-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      font-family: 'DM Mono', monospace;
+      font-weight: 500;
+    }
+    .season-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.8rem;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .season-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.04em;
+      opacity: 0.75;
+      margin-bottom: 24px;
+    }
+    .season-desc {
+      font-size: 0.82rem;
+      line-height: 1.9;
+      letter-spacing: 0.03em;
+      max-width: 480px;
+      margin: 0 auto;
+      opacity: 0.85;
+    }
+
+    /* Your colors row */
+    .your-colors-row {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .your-color-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .your-color-swatch {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.4);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+    }
+    .your-color-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    /* Section cards */
+    .analysis-section {
+      width: 100%;
+      max-width: 680px;
+      background: #fff8f8;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+    }
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      margin-bottom: 20px;
+      color: var(--deep);
+    }
+
+    /* Recommended palette swatches */
+    .palette-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .palette-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .palette-swatch {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+    .palette-name {
+      font-size: 0.58rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-align: center;
+      max-width: 60px;
+    }
+
+    /* Avoid palette */
+    .avoid-palette-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .avoid-chip {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .avoid-chip .palette-swatch::after {
+      content: '✕';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+    .avoid-chip .palette-swatch {
+      position: relative;
+      opacity: 0.6;
+    }
+    .avoid-chip .palette-name {
+      opacity: 0.6;
+    }
+
+    /* Traits list */
+    .traits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .trait-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.8rem;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+    .trait-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      margin-top: 1px;
+    }
+
+    /* Harmonies */
+    .harmonies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 16px;
+    }
+    .harmony-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .harmony-title {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .harmony-swatches {
+      display: flex;
+      gap: 5px;
+    }
+    .harmony-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px var(--shadow);
+    }
+
+    /* Loading */
+    .loading-state {
+      text-align: center;
+      padding: 80px 20px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    .loading-spinner {
+      width: 32px;
+      height: 32px;
+      border: 2px solid var(--border);
+      border-top-color: var(--rose);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Undertone pill */
+    .undertone-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .undertone-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+    }
+    .undertone-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>Seasonal Color Analysis</h1>
+    <span>hoo hacks 2026</span>
+  </header>
+
+  <main id="main-content" style="max-width:760px; padding-bottom:80px;">
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      Analysing your colours…
+    </div>
+  </main>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   COLOR MATH UTILITIES
+═══════════════════════════════════════════════════ */
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return {r,g,b};
+}
+
+function rgbToHsl(r,g,b) {
+  r/=255; g/=255; b/=255;
+  const max=Math.max(r,g,b), min=Math.min(r,g,b);
+  let h,s,l=(max+min)/2;
+  if(max===min){ h=s=0; }
+  else {
+    const d=max-min;
+    s=l>0.5?d/(2-max-min):d/(max+min);
+    switch(max){
+      case r: h=((g-b)/d+(g<b?6:0))/6; break;
+      case g: h=((b-r)/d+2)/6; break;
+      case b: h=((r-g)/d+4)/6; break;
+    }
+  }
+  return {h:h*360, s:s*100, l:l*100};
+}
+
+function hexToHsl(hex) {
+  const {r,g,b}=hexToRgb(hex);
+  return rgbToHsl(r,g,b);
+}
+
+// Rotate hue by degrees
+function rotateHue(hex, deg) {
+  const {h,s,l}=hexToHsl(hex);
+  return hslToHex((h+deg+360)%360, s, l);
+}
+
+function hslToHex(h,s,l) {
+  s/=100; l/=100;
+  const a=s*Math.min(l,1-l);
+  const f=n=>{ const k=(n+h/30)%12; const c=l-a*Math.max(Math.min(k-3,9-k,1),-1); return Math.round(255*c).toString(16).padStart(2,'0'); };
+  return '#'+f(0)+f(8)+f(4);
+}
+
+// Perceived brightness (0-255)
+function brightness(hex) {
+  const {r,g,b}=hexToRgb(hex);
+  return (r*299+g*587+b*114)/1000;
+}
+
+// Warm vs cool: positive = warm, negative = cool
+function warmthScore(hex) {
+  const {r,g,b}=hexToRgb(hex);
+  return (r - b);  // warm colors have more red, cool have more blue
+}
+
+// Chroma / saturation-like
+function chroma(hex) {
+  const {r,g,b}=hexToRgb(hex);
+  return Math.max(r,g,b)-Math.min(r,g,b);
+}
+
+/* ═══════════════════════════════════════════════════
+   SEASONAL CLASSIFICATION
+═══════════════════════════════════════════════════ */
+function classifySeason(colors) {
+  const { eyes, lips, face, hair } = colors;
+
+  // Compute characteristics from skin (face) as primary, with other features as context
+  const faceHsl   = hexToHsl(face);
+  const hairHsl   = hexToHsl(hair);
+  const eyesHsl   = hexToHsl(eyes);
+
+  const skinWarmth   = warmthScore(face);
+  const hairWarmth   = warmthScore(hair);
+  const avgWarmth    = (skinWarmth * 2 + hairWarmth + warmthScore(eyes)) / 4;
+
+  const skinBright   = brightness(face);
+  const hairBright   = brightness(hair);
+  const skinChroma   = chroma(face);
+  const hairChroma   = chroma(hair);
+  const eyesSat      = eyesHsl.s;
+
+  // Contrast: difference between skin brightness and hair brightness
+  const contrast = Math.abs(skinBright - hairBright);
+
+  // Depth: overall darkness
+  const avgBright = (skinBright + hairBright) / 2;
+
+  // Muted vs vivid
+  const avgChroma = (skinChroma + hairChroma) / 2;
+
+  const isWarm   = avgWarmth > 15;
+  const isCool   = avgWarmth < -10;
+  const isDeep   = avgBright < 120;
+  const isLight  = avgBright > 170;
+  const isVivid  = avgChroma > 55;
+  const isMuted  = avgChroma < 30;
+  const isHighContrast = contrast > 60;
+
+  // Season scoring
+  const scores = {
+    spring:  0,
+    summer:  0,
+    autumn:  0,
+    winter:  0,
+  };
+
+  if (isWarm)  { scores.spring += 2; scores.autumn += 2; }
+  if (isCool)  { scores.summer += 2; scores.winter += 2; }
+  if (isLight) { scores.spring += 2; scores.summer += 2; }
+  if (isDeep)  { scores.autumn += 1; scores.winter += 2; }
+  if (isVivid) { scores.spring += 1; scores.winter += 2; }
+  if (isMuted) { scores.summer += 2; scores.autumn += 2; }
+  if (isHighContrast) { scores.winter += 2; }
+  if (!isHighContrast && isLight) { scores.summer += 1; scores.spring += 1; }
+
+  // Skin undertone hue nudge
+  if (faceHsl.h > 20 && faceHsl.h < 50) { scores.spring += 1; scores.autumn += 1; } // golden
+  if (faceHsl.h > 0  && faceHsl.h < 20) { scores.autumn += 1; }                     // copper/red
+  if (faceHsl.h > 180) { scores.winter += 1; scores.summer += 1; }                  // pink/cool
+
+  const season = Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
+
+  // Sub-season (second highest score shapes tone)
+  const sorted = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+  const runner = sorted[1][0];
+
+  const subMap = {
+    spring: {
+      spring: 'True Spring',
+      summer: 'Light Spring',
+      autumn: 'Warm Spring',
+      winter: 'Bright Spring',
+    },
+    summer: {
+      summer: 'True Summer',
+      spring: 'Light Summer',
+      winter: 'Cool Summer',
+      autumn: 'Soft Summer',
+    },
+    autumn: {
+      autumn: 'True Autumn',
+      spring: 'Warm Autumn',
+      winter: 'Deep Autumn',
+      summer: 'Soft Autumn',
+    },
+    winter: {
+      winter: 'True Winter',
+      spring: 'Bright Winter',
+      summer: 'Cool Winter',
+      autumn: 'Deep Winter',
+    },
+  };
+
+  const subSeason = subMap[season]?.[runner] || subMap[season]?.[season];
+
+  return { season, subSeason, scores, isWarm, isCool, isDeep, isLight, isVivid, isMuted, contrast };
+}
+
+/* ═══════════════════════════════════════════════════
+   COLOR HARMONY GENERATION
+═══════════════════════════════════════════════════ */
+function generateHarmonies(baseHex) {
+  return {
+    complementary: [baseHex, rotateHue(baseHex, 180)],
+    analogous:     [rotateHue(baseHex,-30), baseHex, rotateHue(baseHex,30)],
+    triadic:       [baseHex, rotateHue(baseHex,120), rotateHue(baseHex,240)],
+    tetradic:      [baseHex, rotateHue(baseHex,90), rotateHue(baseHex,180), rotateHue(baseHex,270)],
+  };
+}
+
+/* ═══════════════════════════════════════════════════
+   SEASON DATA
+═══════════════════════════════════════════════════ */
+const SEASON_DATA = {
+  spring: {
+    heroGradient: 'linear-gradient(135deg, #FFF5E6 0%, #FFE8CC 40%, #FDDBB4 100%)',
+    textColor: '#5C3A1E',
+    badgeBg: '#FFD49A',
+    badgeColor: '#7A4A10',
+    emoji: '🌸',
+    description: 'You radiate warmth and vitality. Your colouring has a golden, peachy quality — think sunlit skin, bright eyes, and hair with warm golden or reddish tones. You suit colours that feel fresh, warm, and luminous.',
+    traits: [
+      { icon: '☀️', text: 'Warm undertone — your veins appear greenish' },
+      { icon: '✨', text: 'Light to medium colouring with bright contrast' },
+      { icon: '🌿', text: 'Hair often has golden, strawberry, or auburn warmth' },
+      { icon: '👁️', text: 'Eyes tend to be blue, green, hazel, or warm brown' },
+    ],
+    palette: [
+      { hex: '#F4A460', name: 'Sandy Brown' },
+      { hex: '#FFB347', name: 'Apricot' },
+      { hex: '#90EE90', name: 'Light Green' },
+      { hex: '#87CEEB', name: 'Sky Blue' },
+      { hex: '#FF7F7F', name: 'Coral' },
+      { hex: '#FFD700', name: 'Golden' },
+      { hex: '#98FB98', name: 'Mint' },
+      { hex: '#F08080', name: 'Salmon' },
+      { hex: '#FFFACD', name: 'Lemon' },
+      { hex: '#FFA07A', name: 'Peach' },
+    ],
+    avoid: [
+      { hex: '#000000', name: 'Black' },
+      { hex: '#808080', name: 'Cool Grey' },
+      { hex: '#800080', name: 'Purple' },
+      { hex: '#000080', name: 'Navy' },
+    ],
+    neutrals: ['#F5DEB3','#D2B48C','#E8C8A0'],
+    tip: 'Wear gold jewellery over silver. Your best neutrals are warm camel, peach, and ivory — avoid stark black and white.',
+  },
+  summer: {
+    heroGradient: 'linear-gradient(135deg, #E8F4F8 0%, #D6EAF8 40%, #C8E6F5 100%)',
+    textColor: '#1A3A5C',
+    badgeBg: '#AACFE0',
+    badgeColor: '#1A3A5C',
+    emoji: '🌊',
+    description: 'You have a soft, cool, and romantic quality. Your colouring is delicate — cool or ashy undertones, often with muted, dusty tones rather than vivid pigment. You look best in colours that share this whisper-soft elegance.',
+    traits: [
+      { icon: '🫧', text: 'Cool undertone — your veins appear blue or purple' },
+      { icon: '🌫️', text: 'Light to medium colouring, often slightly muted' },
+      { icon: '🌿', text: 'Hair is often ash blonde, ash brown, or mousy with no warm tones' },
+      { icon: '👁️', text: 'Eyes are often blue, grey, or soft green' },
+    ],
+    palette: [
+      { hex: '#B0C4DE', name: 'Steel Blue' },
+      { hex: '#DDA0DD', name: 'Plum Rose' },
+      { hex: '#E6E6FA', name: 'Lavender' },
+      { hex: '#C8B8D4', name: 'Mauve' },
+      { hex: '#99C5C4', name: 'Dusty Teal' },
+      { hex: '#D4A5A5', name: 'Dusty Rose' },
+      { hex: '#A8B8C8', name: 'Powder Blue' },
+      { hex: '#C0C0C0', name: 'Soft Silver' },
+      { hex: '#B8CED8', name: 'Misty Blue' },
+      { hex: '#CFAAB4', name: 'Soft Pink' },
+    ],
+    avoid: [
+      { hex: '#FF4500', name: 'Orange' },
+      { hex: '#8B4513', name: 'Rust' },
+      { hex: '#FFD700', name: 'Bright Gold' },
+      { hex: '#FF6347', name: 'Tomato Red' },
+    ],
+    neutrals: ['#C8C8C8','#D8D0D8','#BCBCBC'],
+    tip: 'Silver jewellery is your best friend. Wear dusty, muted versions of colours rather than bright ones. Your best neutrals are soft grey, rose-brown, and lavender.',
+  },
+  autumn: {
+    heroGradient: 'linear-gradient(135deg, #FFF0E0 0%, #F5DEB3 40%, #DEB887 100%)',
+    textColor: '#4A2800',
+    badgeBg: '#C4956A',
+    badgeColor: '#FFF5E8',
+    emoji: '🍂',
+    description: 'You embody the richness of the harvest season. Your colouring has a warm, earthy depth — bronze skin, golden-brown to auburn hair, and eyes like amber or dark chocolate. You suit colours drawn from nature: terracotta, mustard, forest green, and deep rust.',
+    traits: [
+      { icon: '🔥', text: 'Warm, golden or olive undertone' },
+      { icon: '🌰', text: 'Medium to deep colouring with rich, muted tones' },
+      { icon: '🍁', text: 'Hair is often brown, auburn, copper, or deep golden' },
+      { icon: '👁️', text: 'Eyes are often brown, hazel, olive green, or amber' },
+    ],
+    palette: [
+      { hex: '#B7410E', name: 'Rust' },
+      { hex: '#D4A017', name: 'Mustard' },
+      { hex: '#556B2F', name: 'Olive' },
+      { hex: '#8B4513', name: 'Saddle Brown' },
+      { hex: '#CD853F', name: 'Peru' },
+      { hex: '#6B8E23', name: 'Moss Green' },
+      { hex: '#A0522D', name: 'Sienna' },
+      { hex: '#CC7722', name: 'Ochre' },
+      { hex: '#704214', name: 'Chocolate' },
+      { hex: '#C65D07', name: 'Burnt Orange' },
+    ],
+    avoid: [
+      { hex: '#FF69B4', name: 'Hot Pink' },
+      { hex: '#00FFFF', name: 'Cyan' },
+      { hex: '#C0C0C0', name: 'Cool Silver' },
+      { hex: '#E6E6FA', name: 'Lavender' },
+    ],
+    neutrals: ['#8B7355','#C4A882','#6B5237'],
+    tip: 'Gold jewellery enhances your warmth. Your best neutrals are warm brown, camel, and olive. Avoid cool, icy tones which wash you out.',
+  },
+  winter: {
+    heroGradient: 'linear-gradient(135deg, #E8E8F0 0%, #D0D0E8 40%, #B8B8D8 100%)',
+    textColor: '#0A0A2A',
+    badgeBg: '#3A3A5C',
+    badgeColor: '#E8E8FF',
+    emoji: '❄️',
+    description: 'You have a striking, high-contrast presence. Your colouring is bold — cool or neutral undertones, deep or very fair skin, and dark or strikingly light hair. You are made for the drama of true black, pure white, and jewel tones.',
+    traits: [
+      { icon: '💎', text: 'Cool or neutral undertone, often with blue or pink cast' },
+      { icon: '⚡', text: 'High contrast between skin, hair, and eyes' },
+      { icon: '🖤', text: 'Hair is often very dark — black, dark brown — or platinum blonde' },
+      { icon: '👁️', text: 'Eyes are often dark brown, black, icy blue, or steel grey' },
+    ],
+    palette: [
+      { hex: '#000000', name: 'True Black' },
+      { hex: '#FFFFFF', name: 'Pure White' },
+      { hex: '#0047AB', name: 'Cobalt Blue' },
+      { hex: '#800020', name: 'Burgundy' },
+      { hex: '#008080', name: 'Teal' },
+      { hex: '#4B0082', name: 'Indigo' },
+      { hex: '#DC143C', name: 'Crimson' },
+      { hex: '#228B22', name: 'Forest Green' },
+      { hex: '#8B008B', name: 'Dark Magenta' },
+      { hex: '#C0C0C0', name: 'Silver' },
+    ],
+    avoid: [
+      { hex: '#F4A460', name: 'Warm Tan' },
+      { hex: '#DEB887', name: 'Burlywood' },
+      { hex: '#F5DEB3', name: 'Wheat' },
+      { hex: '#DAA520', name: 'Goldenrod' },
+    ],
+    neutrals: ['#1C1C2E','#FAFAFA','#808098'],
+    tip: 'Silver and white gold jewellery are ideal. You can wear stark black and white that would overwhelm other seasons. Avoid warm, earthy tones which dull your natural drama.',
+  },
+};
+
+/* ═══════════════════════════════════════════════════
+   PAGE RENDER
+═══════════════════════════════════════════════════ */
+const main = document.getElementById('main-content');
+
+const storedColors = sessionStorage.getItem('hoohacks_colors');
+const storedPhoto  = sessionStorage.getItem('hoohacks_photo');
+
+if (!storedColors) {
+  main.innerHTML = `
+    <p class="page-title">No colours found</p>
+    <div class="no-photo">
+      Head back and pick your colours first.<br/>
+      <a href="index.html">← Start over</a>
+    </div>`;
+} else {
+  const colors = JSON.parse(storedColors);
+  setTimeout(() => renderAnalysis(colors), 400); // brief loading feel
+}
+
+function renderAnalysis(colors) {
+  const result   = classifySeason(colors);
+  const data     = SEASON_DATA[result.season];
+  const harmonies = generateHarmonies(colors.face);
+
+  main.innerHTML = '';
+
+  // ── Hero card
+  const hero = document.createElement('div');
+  hero.className = 'analysis-hero';
+  hero.style.background  = data.heroGradient;
+  hero.style.color        = data.textColor;
+  hero.style.border       = `1px solid rgba(0,0,0,0.06)`;
+  hero.style.boxShadow    = '0 12px 48px rgba(0,0,0,0.10)';
+  hero.innerHTML = `
+    <div class="season-badge" style="background:${data.badgeBg}; color:${data.badgeColor};">
+      ${data.emoji} Your season
+    </div>
+    <div class="season-name">${capitalize(result.season)}</div>
+    <div class="season-sub">${result.subSeason}</div>
+    <p class="season-desc">${data.description}</p>
+    <div class="your-colors-row">
+      ${['face','eyes','lips','hair'].map(f => `
+        <div class="your-color-chip">
+          <div class="your-color-swatch" style="background:${colors[f]}"></div>
+          <div class="your-color-label">${f}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  main.appendChild(hero);
+
+  // ── Undertone & contrast
+  const undertoneSection = makeSection('Your characteristics');
+  undertoneSection.innerHTML += `
+    <div class="undertone-row">
+      <div class="undertone-pill">
+        <div class="undertone-dot" style="background:${result.isWarm ? '#DAA520' : result.isCool ? '#6495ED' : '#9B8EA8'}"></div>
+        ${result.isWarm ? 'Warm undertone' : result.isCool ? 'Cool undertone' : 'Neutral undertone'}
+      </div>
+      <div class="undertone-pill">
+        <div class="undertone-dot" style="background:${result.isDeep ? '#3B2A1A' : result.isLight ? '#FAE8D4' : '#B07850'}"></div>
+        ${result.isDeep ? 'Deep colouring' : result.isLight ? 'Light colouring' : 'Medium colouring'}
+      </div>
+      <div class="undertone-pill">
+        <div class="undertone-dot" style="background:${result.isMuted ? '#A8A8A8' : result.isVivid ? '#FF6B35' : '#D4926A'}"></div>
+        ${result.isMuted ? 'Muted / soft' : result.isVivid ? 'Vivid / bright' : 'Moderate chroma'}
+      </div>
+    </div>
+    <div class="traits-list" style="margin-top:20px;">
+      ${data.traits.map(t => `
+        <div class="trait-row">
+          <div class="trait-icon" style="background:#fff8f8; border:1px solid var(--border);">${t.icon}</div>
+          <span>${t.text}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  main.appendChild(undertoneSection);
+
+  // ── Recommended palette
+  const palSection = makeSection('Your colour palette');
+  palSection.innerHTML += `
+    <div class="palette-grid">
+      ${data.palette.map(c => `
+        <div class="palette-chip">
+          <div class="palette-swatch" style="background:${c.hex}"></div>
+          <div class="palette-name">${c.name}</div>
+        </div>
+      `).join('')}
+    </div>
+    <p style="font-size:0.76rem; color:var(--muted); margin-top:18px; line-height:1.7; letter-spacing:0.03em;">
+      💡 ${data.tip}
+    </p>
+  `;
+  main.appendChild(palSection);
+
+  // ── Colours to avoid
+  const avoidSection = makeSection('Colours to avoid');
+  avoidSection.innerHTML += `
+    <p style="font-size:0.78rem; color:var(--muted); margin-bottom:16px; line-height:1.7; letter-spacing:0.03em;">
+      These tones work against your natural colouring — they can make you look washed out, sallow, or add unwanted shadows.
+    </p>
+    <div class="avoid-palette-grid">
+      ${data.avoid.map(c => `
+        <div class="avoid-chip palette-chip">
+          <div class="palette-swatch" style="background:${c.hex}; opacity:0.5; position:relative;">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1rem;color:white;text-shadow:0 1px 3px rgba(0,0,0,0.6);">✕</div>
+          </div>
+          <div class="palette-name" style="opacity:0.65;">${c.name}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  main.appendChild(avoidSection);
+
+  // ── Colour harmonies (generated from skin tone)
+  const harmSection = makeSection('Colour harmonies based on your skin tone');
+  harmSection.innerHTML += `
+    <p style="font-size:0.76rem; color:var(--muted); margin-bottom:18px; line-height:1.6; letter-spacing:0.03em;">
+      These combinations are mathematically harmonious with your face colour (${colors.face.toUpperCase()}).
+    </p>
+    <div class="harmonies-grid">
+      ${Object.entries(harmonies).map(([name, swatches]) => `
+        <div class="harmony-card">
+          <div class="harmony-title">${name}</div>
+          <div class="harmony-swatches">
+            ${swatches.map(s => `<div class="harmony-dot" style="background:${s}"></div>`).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  main.appendChild(harmSection);
+
+  // ── Action buttons
+  const btnRow = document.createElement('div');
+  btnRow.className = 'btn-row';
+  btnRow.innerHTML = `
+    <button class="btn btn-ghost" onclick="window.location.href='results.html'">← Pick again</button>
+    <button class="btn btn-ghost" onclick="window.location.href='index.html'">↩ Start over</button>
+    <button class="btn btn-dark" id="save-btn">Save as image</button>
+  `;
+  main.appendChild(btnRow);
+
+  document.getElementById('save-btn').addEventListener('click', saveResult);
+}
+
+function makeSection(title) {
+  const s = document.createElement('div');
+  s.className = 'analysis-section';
+  s.innerHTML = `<div class="section-heading">${title}</div>`;
+  return s;
+}
+
+function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+/* ── Save as image (uses canvas) ── */
+function saveResult() {
+  const hero = document.querySelector('.analysis-hero');
+  if (!hero) return;
+  alert('Tip: Use your browser\'s screenshot or print-to-PDF to save your results!');
+}
+</script>
+</body>
+</html>
