@@ -10,6 +10,7 @@
   --cream:  #FCF9EA;
   --blush:  #F2C4C4;
   --rose:   #D97B7B;
+  --rose-lighter:#ec9a9a;
   --deep:   #2B1A1A;
   --muted:  #4f3a3a;
   --border: #E8C8C8;
@@ -118,7 +119,7 @@ header h1 {
 }
 
 .btn:active { transform: scale(0.97); }
-.btn-start  { background: var(--blush); color: var(--deep); }
+.btn-start  { background: var(--rose-lighter); color: var(--deep); }
 .btn-learn { background: transparent; color: var(--muted); border: 1px solid var(--border); }
 .btn-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
 
