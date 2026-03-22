@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Persona Palette | Body Shape Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Stoke:wght@400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="styles.css" rel="stylesheet" />
+  <script src="/layout.js"></script>
+  <link rel="icon" href="/assets/images/icon.png">
+  <style>
+    /* ── Body Shape Selection Page ── */
+    .body-shape-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .shape-card {
+      background: #fff8f8;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 20px;
+      width: calc(50% - 8px);
+      min-width: 200px;
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+      text-align: center;
+      position: relative;
+    }
+    .shape-card:hover {
+      border-color: var(--rose);
+      box-shadow: 0 4px 20px var(--shadow);
+      transform: translateY(-2px);
+    }
+    .shape-card.selected {
+      border-color: var(--rose);
+      background: #fff0f0;
+      box-shadow: 0 0 0 3px var(--blush);
+    }
+
+    .shape-emoji {
+      font-size: 2.4rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .shape-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--deep);
+      margin-bottom: 6px;
+    }
+    .shape-tagline {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+      line-height: 1.5;
+    }
+
+    .shape-checkmark {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      font-size: 1rem;
+      color: var(--rose);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .shape-card.selected .shape-checkmark {
+      opacity: 1;
+    }
+
+    /* Expandable details panel */
+    .shape-details {
+      display: none;
+      margin-top: 12px;
+      text-align: left;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+    .shape-card.expanded .shape-details {
+      display: block;
+    }
+    .shape-detail-item {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      font-size: 0.78rem;
+      line-height: 1.6;
+      color: var(--muted);
+      margin-bottom: 6px;
+      letter-spacing: 0.02em;
+    }
+    .shape-detail-icon {
+      flex-shrink: 0;
+      font-size: 0.85rem;
+    }
+
+    .expand-hint {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-top: 10px;
+      display: block;
+    }
+
+    /* ── Result Page Styles (mirrors analysis.html) ── */
+    .analysis-hero {
+      width: 100%;
+      max-width: 680px;
+      border-radius: 20px;
+      padding: 48px 40px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .analysis-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: inherit;
+      filter: blur(0);
+      z-index: 0;
+    }
+    .analysis-hero * { position: relative; z-index: 1; }
+
+    .season-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      font-family: 'DM Mono', monospace;
+      font-weight: 500;
+    }
+    .season-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.8rem;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .season-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      font-style: normal;
+      letter-spacing: 0.14em;
+      opacity: 0.6;
+      margin-bottom: 24px;
+    }
+
+    .analysis-section {
+      width: 100%;
+      max-width: 680px;
+      background: #fff8f8;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+    }
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      margin-bottom: 20px;
+      color: var(--deep);
+    }
+
+    .traits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .trait-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.8rem;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+    .trait-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      margin-top: 1px;
+    }
+
+    /* Clothing category grid */
+    .clothing-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .clothing-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+    .clothing-item-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: var(--deep);
+      margin-bottom: 4px;
+    }
+    .clothing-item-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+
+    .undertone-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .undertone-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 80px 20px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    .loading-spinner {
+      width: 32px;
+      height: 32px;
+      border: 2px solid var(--border);
+      border-top-color: var(--rose);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+<div id="main-area">
+<div id="app">
+  <main id="main-content">
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      Loading body shape analysis…
+    </div>
+  </main>
+</div>
+</div>
+
+<script src="body-data.js"></script>
+<script>
+const SHAPES = [
+  { key: 'hourglass',          label: 'Hourglass',          emoji: '⌛', tagline: 'defined waist with equal bust and hips' },
+  { key: 'triangle',           label: 'Triangle',           emoji: '🔺', tagline: 'bust and waist narrower than hips' },
+  { key: 'inverted_triangle',  label: 'Inverted Triangle',  emoji: '🔻', tagline: 'broad shouldered with narrow hips' },
+  { key: 'rectangle',          label: 'Rectangle',          emoji: '▬',  tagline: 'straight waisted with equal bust and hips' },
+  { key: 'oval',               label: 'Oval',               emoji: '🥚', tagline: 'waist wider than bust and hips' },
+];
+
+let selectedShape = null;
+const main = document.getElementById('main-content');
+
+// Check if we already have a saved result
+const savedShape = sessionStorage.getItem('hoohacks_body_shape');
+if (savedShape) {
+  setTimeout(() => renderResult(savedShape), 300);
+} else {
+  buildSelectionPage();
+}
+
+/* ═══════════════════════════════════════════════════
+   SELECTION PAGE
+═══════════════════════════════════════════════════ */
+function buildSelectionPage() {
+  main.innerHTML = `
+    <p class="page-title">Body Shape Analysis</p>
+
+    <div class="instruction-banner" id="instruction-banner">
+      <div class="step-label">Step 1 — Select your body shape</div>
+      <div class="feature-name" style="font-size:1rem; letter-spacing:0.1em; color:var(--muted); font-family:'DM Mono',monospace;">
+        Not sure? Click each card to read its characteristics
+      </div>
+    </div>
+
+    <div class="body-shape-grid" id="shape-grid"></div>
+
+    <p style="font-size:0.72rem; color:var(--muted); letter-spacing:0.08em; text-align:center; max-width:480px;">
+      💡 Body shape is based on the relationship between your shoulders/bust, waist, and hips — not your weight or size.
+    </p>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="window.location.href='index.html'">← Go back</button>
+      <button class="btn btn-rose" id="analyze-btn" style="display:none;" onclick="goToResult()">
+        Analyze my body shape →
+      </button>
+    </div>
+  `;
+
+  buildShapeCards();
+}
+
+function buildShapeCards() {
+  const grid = document.getElementById('shape-grid');
+  grid.innerHTML = '';
+
+  SHAPES.forEach(shape => {
+    const data = BODY_DATA[shape.key];
+    const card = document.createElement('div');
+    card.className = 'shape-card';
+    card.id = 'card-' + shape.key;
+
+    card.innerHTML = `
+      <span class="shape-checkmark">✓</span>
+      <span class="shape-emoji">${shape.emoji}</span>
+      <div class="shape-name">${shape.label}</div>
+      <div class="shape-tagline">${shape.tagline}</div>
+      <span class="expand-hint">▾ tap to read characteristics</span>
+      <div class="shape-details">
+        ${data.characteristics.map(c => `
+          <div class="shape-detail-item">
+            <span class="shape-detail-icon">${c.icon}</span>
+            <span>${c.text}</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+
+    card.addEventListener('click', () => handleCardClick(shape.key, card));
+    grid.appendChild(card);
+  });
+}
+
+function handleCardClick(key, card) {
+  const isExpanded = card.classList.contains('expanded');
+  const isSelected = card.classList.contains('selected');
+
+  // If already selected and expanded — deselect
+  if (isSelected && isExpanded) {
+    card.classList.remove('selected', 'expanded');
+    card.querySelector('.expand-hint').textContent = '▾ tap to read characteristics';
+    selectedShape = null;
+    document.getElementById('analyze-btn').style.display = 'none';
+    return;
+  }
+
+  // Collapse all other cards
+  document.querySelectorAll('.shape-card').forEach(c => {
+    c.classList.remove('selected', 'expanded');
+    c.querySelector('.expand-hint').textContent = '▾ tap to read characteristics';
+  });
+
+  // Expand and select this one
+  card.classList.add('selected', 'expanded');
+  card.querySelector('.expand-hint').textContent = '▴ collapse';
+  selectedShape = key;
+  document.getElementById('analyze-btn').style.display = 'inline-flex';
+}
+
+function goToResult() {
+  if (!selectedShape) return;
+  sessionStorage.setItem('hoohacks_body_shape', selectedShape);
+  main.innerHTML = `<div class="loading-state"><div class="loading-spinner"></div>Analysing your shape…</div>`;
+  setTimeout(() => renderResult(selectedShape), 500);
+}
+
+/* ═══════════════════════════════════════════════════
+   RESULT PAGE
+═══════════════════════════════════════════════════ */
+function renderResult(shapeKey) {
+  const data = BODY_DATA[shapeKey];
+  if (!data) { buildSelectionPage(); return; }
+
+  main.innerHTML = '';
+
+  // ── Hero card
+  const hero = document.createElement('div');
+  hero.className = 'analysis-hero';
+  hero.style.background = data.heroGradient;
+  hero.style.color = data.textColor;
+  hero.style.border = '1px solid rgba(0,0,0,0.06)';
+  hero.style.boxShadow = '0 12px 48px rgba(0,0,0,0.10)';
+  hero.innerHTML = `
+    <div class="season-badge" style="background:${data.badgeBg}; color:${data.badgeColor};">
+      ${data.emoji} Your body shape
+    </div>
+    <div class="season-name">${data.name}</div>
+    <div class="season-sub">${data.oneWordSum}</div>
+    <p style="font-size:0.82rem; line-height:1.8; letter-spacing:0.03em; max-width:480px; margin:0 auto; opacity:0.85;">
+      ${data.dressingTip}
+    </p>
+  `;
+  main.appendChild(hero);
+
+  // ── Characteristics
+  const charSection = makeSection('Your characteristics');
+  charSection.innerHTML += `
+    <div class="traits-list">
+      ${data.characteristics.map(c => `
+        <div class="trait-row">
+          <div class="trait-icon" style="background:#fff8f8; border:1px solid var(--border);">${c.icon}</div>
+          <span>${c.text}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  main.appendChild(charSection);
+
+  // ── Tops
+  const topsSection = makeSection('✦ Best tops for you');
+  topsSection.innerHTML += `<div class="clothing-grid">${data.tops.map(renderClothingItem).join('')}</div>`;
+  main.appendChild(topsSection);
+
+  // ── Bottoms
+  const bottomsSection = makeSection('✦ Best bottoms for you');
+  bottomsSection.innerHTML += `<div class="clothing-grid">${data.bottoms.map(renderClothingItem).join('')}</div>`;
+  main.appendChild(bottomsSection);
+
+  // ── Dresses
+  const dressSection = makeSection('✦ Best dresses for you');
+  dressSection.innerHTML += `<div class="clothing-grid">${data.dresses.map(renderClothingItem).join('')}</div>`;
+  main.appendChild(dressSection);
+
+  // ── Outerwear
+  const outerSection = makeSection('✦ Best outerwear for you');
+  outerSection.innerHTML += `<div class="clothing-grid">${data.outerwear.map(renderClothingItem).join('')}</div>`;
+  main.appendChild(outerSection);
+
+  // ── Necklines
+  const neckSection = makeSection('✦ Best necklines for you');
+  neckSection.innerHTML += `<div class="clothing-grid">${data.necklines.map(renderClothingItem).join('')}</div>`;
+  main.appendChild(neckSection);
+
+  // ── Sleeves
+  const sleeveSection = makeSection('✦ Best sleeves for you');
+  sleeveSection.innerHTML += `<div class="clothing-grid">${data.sleeves.map(renderClothingItem).join('')}</div>`;
+  main.appendChild(sleeveSection);
+
+  // ── Best combos
+  const bestSection = makeSection('Best combinations');
+  bestSection.innerHTML += `
+    <div class="traits-list">
+      ${data.bestCombos.map(c => `
+        <div class="trait-row">
+          <div class="trait-icon" style="background:#e8f5e9; border:1px solid #c8e6c9;">✓</div>
+          <span>${c}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  main.appendChild(bestSection);
+
+  // ── Avoid
+  const avoidSection = makeSection('Styles to avoid');
+  avoidSection.innerHTML += `
+    <p style="font-size:0.78rem; color:var(--muted); margin-bottom:16px; line-height:1.7; letter-spacing:0.03em;">
+      These styles work against your natural proportions and can make you look unbalanced.
+    </p>
+    <div class="traits-list">
+      ${data.avoid.map(a => `
+        <div class="trait-row">
+          <div class="trait-icon" style="background:#fce4ec; border:1px solid #f8bbd0;">✕</div>
+          <span>${a}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  main.appendChild(avoidSection);
+
+  // ── Action buttons
+  const btnRow = document.createElement('div');
+  btnRow.className = 'btn-row';
+  btnRow.innerHTML = `
+    <button class="btn btn-ghost" onclick="resetShape()">← Pick again</button>
+    <button class="btn btn-ghost" onclick="window.location.href='index.html'">↩ Start over</button>
+    <button class="btn btn-rose" onclick="window.location.href='add_photo.html'">Color analysis →</button>
+  `;
+  main.appendChild(btnRow);
+}
+
+function renderClothingItem(item) {
+  return `
+    <div class="clothing-item">
+      <div class="clothing-item-name">${item.name}</div>
+      <div class="clothing-item-desc">${item.description}</div>
+    </div>
+  `;
+}
+
+function makeSection(title) {
+  const s = document.createElement('div');
+  s.className = 'analysis-section';
+  s.innerHTML = `<div class="section-heading">${title}</div>`;
+  return s;
+}
+
+function resetShape() {
+  sessionStorage.removeItem('hoohacks_body_shape');
+  selectedShape = null;
+  buildSelectionPage();
+}
+</script>
+</body>
+</html>
