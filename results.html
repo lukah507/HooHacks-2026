@@ -51,6 +51,7 @@
       <div class="canvas-wrap" id="canvas-wrap">
         <canvas id="results-canvas"></canvas>
         <div class="click-hint" id="click-hint">Click anywhere on the image</div>
+        <div class="hover-preview" id="hover-preview" style="display:none;"></div>
       </div>
 
       <p class="swatches-title">Extracted colours</p>
@@ -79,7 +80,31 @@
     };
     img.src = photo;
 
-    document.getElementById('results-canvas').addEventListener('click', handleCanvasClick);
+    const canvas = document.getElementById('results-canvas');
+    const hoverPreview = document.getElementById('hover-preview');
+
+    canvas.addEventListener('click', handleCanvasClick);
+    canvas.addEventListener('mousemove', function (e) {
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+      const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+      const ctx = canvas.getContext('2d');
+      const data = ctx.getImageData(Math.floor(x), Math.floor(y), 1, 1).data;
+      const [r, g, b] = data;
+      const hex = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+
+      hoverPreview.style.display = 'block';
+      hoverPreview.style.left = `${e.clientX + 14}px`;
+      hoverPreview.style.top = `${e.clientY + 14}px`;
+      hoverPreview.style.background = hex;
+      hoverPreview.style.color = (r*0.299 + g*0.587 + b*0.114) > 186 ? '#222' : '#FFF';
+      // hoverPreview.textContent = hex.toUpperCase();
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      hoverPreview.style.display = 'none';
+    });
+
     document.getElementById('reset-btn').addEventListener('click', resetColors);
     document.getElementById('back-btn').addEventListener('click', () => { window.location.href = 'index.html'; });
     document.getElementById('analyze-btn').addEventListener('click', goToAnalysis);

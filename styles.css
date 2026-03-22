@@ -402,6 +402,23 @@ main {
   opacity: 0;
 }
 
+/* Hover color preview */
+.hover-preview {
+  position: fixed;
+  z-index: 1000;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.18);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.24);
+  font-size: 0.75rem;
+  font-family: 'DM Mono', monospace;
+  pointer-events: none;
+  user-select: none;
+  min-width: 40px;
+  min-height: 30px;
+  text-align: center;
+}
+
 /* Ripple Animation */
 .ripple {
   position: absolute;
