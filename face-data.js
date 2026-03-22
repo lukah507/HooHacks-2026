@@ -11,9 +11,9 @@ const FACE_DATA = {
     oneWordSum: 'Versatile & Balanced',
     characteristics: [
       { icon: '📐', text: 'Your face length is greater than the width of your cheekbones' },
-      { icon: '✂️', text: 'Your forehead is slightly wider than your jawline' },
-      { icon: '💫', text: 'Your jawline is gently rounded, not sharp or angular' },
-      { icon: '🌀', text: 'Your proportions are naturally balanced — the most versatile face shape' },
+      { icon: '📏', text: 'Your forehead is slightly wider than your jawline' },
+      { icon: '🔍', text: 'Your jawline is gently rounded, not sharp or angular' },
+      { icon: '📊', text: 'Your proportions are naturally balanced — the most versatile face shape' },
     ],
     stylingTip: 'Lucky you — almost any hairstyle works beautifully with an oval face. You can play with different lengths, textures, and cuts freely. The main thing to avoid is covering too much of your face with heavy bangs, which can hide your naturally balanced proportions.',
     cuts: [
@@ -58,9 +58,9 @@ const FACE_DATA = {
     oneWordSum: 'Soft & Circular',
     characteristics: [
       { icon: '📐', text: 'Your cheekbones and face length have a similar measurement' },
-      { icon: '✂️', text: 'Your forehead and jawline are also similar in size' },
-      { icon: '💫', text: 'Your jawline is soft and rounded with no sharp angles' },
-      { icon: '🌀', text: 'Your face is nearly as wide as it is long, creating a circular appearance' },
+      { icon: '📏', text: 'Your forehead and jawline are also similar in size' },
+      { icon: '🔍', text: 'Your jawline is soft and rounded with no sharp angles' },
+      { icon: '📊', text: 'Your face is nearly as wide as it is long, creating a circular appearance' },
     ],
     stylingTip: 'The goal is to add angles and the illusion of length. Angular cuts, height at the crown, and styles with vertical movement elongate your face and create a more balanced look. Avoid styles that add width at the sides, which emphasize the roundness.',
     cuts: [
@@ -107,9 +107,9 @@ const FACE_DATA = {
     oneWordSum: 'Strong & Angular',
     characteristics: [
       { icon: '📐', text: 'Your forehead, cheekbones, and jawline are all roughly the same width' },
-      { icon: '✂️', text: 'Your jawline is strong, sharp, and angular' },
-      { icon: '💫', text: 'You have a broad, defined jaw that gives your face a powerful structure' },
-      { icon: '🌀', text: 'Your face appears nearly as wide as it is long with strong, defined edges' },
+      { icon: '📏', text: 'Your jawline is strong, sharp, and angular' },
+      { icon: '🔍', text: 'You have a broad, defined jaw that gives your face a powerful structure' },
+      { icon: '📊', text: 'Your face appears nearly as wide as it is long with strong, defined edges' },
     ],
     stylingTip: 'The goal is to soften your strong jawline while adding length. Curls, waves, and layered styles break up the angular lines and create a more balanced look. Side-swept styles and layers around the face are especially flattering. Avoid blunt cuts that accentuate the jaw.',
     cuts: [
@@ -156,9 +156,9 @@ const FACE_DATA = {
     oneWordSum: 'Wide Brow, Pointed Chin',
     characteristics: [
       { icon: '📐', text: 'Your forehead is the widest part of your face' },
-      { icon: '✂️', text: 'Your cheekbones are slightly narrower than your forehead' },
-      { icon: '💫', text: 'Your chin is pointed and narrow' },
-      { icon: '🌀', text: 'Your face tapers from a broad forehead down to a delicate pointed chin' },
+      { icon: '📏', text: 'Your cheekbones are slightly narrower than your forehead' },
+      { icon: '🔍', text: 'Your chin is pointed and narrow' },
+      { icon: '📊', text: 'Your face tapers from a broad forehead down to a delicate pointed chin' },
     ],
     stylingTip: 'Balance a wider forehead by adding fullness at the jawline and chin. Face-framing cuts and volume through the lower half of your hair create a harmonious look. Side parts and chin-length styles are especially effective. Avoid styles with too much volume on top.',
     cuts: [
@@ -205,9 +205,9 @@ const FACE_DATA = {
     oneWordSum: 'High Cheekbones & Angular',
     characteristics: [
       { icon: '📐', text: 'Your cheekbones are the widest part of your face' },
-      { icon: '✂️', text: 'Your forehead is narrow — narrower than your cheekbones' },
-      { icon: '💫', text: 'Your chin is pointed and narrow' },
-      { icon: '🌀', text: 'Your face length is the greatest measurement — narrowing at both the top and bottom' },
+      { icon: '📏', text: 'Your forehead is narrow — narrower than your cheekbones' },
+      { icon: '🔍', text: 'Your chin is pointed and narrow' },
+      { icon: '📊', text: 'Your face length is the greatest measurement — narrowing at both the top and bottom' },
     ],
     stylingTip: 'The goal is to soften your striking cheekbones and add width at the forehead and jawline. Styles that add volume at the forehead and chin create balance. Avoid too much volume at the sides, which emphasizes the cheekbones further.',
     cuts: [
@@ -254,9 +254,9 @@ const FACE_DATA = {
     oneWordSum: 'Long & Angular',
     characteristics: [
       { icon: '📐', text: 'Your face length is the greatest measurement' },
-      { icon: '✂️', text: 'Your forehead, cheekbones, and jawline are similar in width' },
-      { icon: '💫', text: 'Your jawline tends to be angular rather than rounded' },
-      { icon: '🌀', text: 'Your face is noticeably longer than it is wide, giving an elongated appearance' },
+      { icon: '📏', text: 'Your forehead, cheekbones, and jawline are similar in width' },
+      { icon: '🔍', text: 'Your jawline tends to be angular rather than rounded' },
+      { icon: '📊', text: 'Your face is noticeably longer than it is wide, giving an elongated appearance' },
     ],
     stylingTip: 'Balance your longer face with volume on the sides and avoid too much height on top. Styles that add width and fullness at the sides create the illusion of a shorter, more oval face. Soft layered fringe and waves that hit at the sides are especially flattering.',
     cuts: [
@@ -303,9 +303,9 @@ const FACE_DATA = {
     oneWordSum: 'Wide Jaw, Narrow Brow',
     characteristics: [
       { icon: '📐', text: 'Your jawline is the widest part of your face' },
-      { icon: '✂️', text: 'Your cheekbones are wider than your forehead' },
-      { icon: '💫', text: 'Your forehead is the narrowest part, tapering upward' },
-      { icon: '🌀', text: 'Your face widens from the forehead down to the jaw — the opposite of a heart shape' },
+      { icon: '📏', text: 'Your cheekbones are wider than your forehead' },
+      { icon: '🔍', text: 'Your forehead is the narrowest part, tapering upward' },
+      { icon: '📊', text: 'Your face widens from the forehead down to the jaw — the opposite of a heart shape' },
     ],
     stylingTip: 'Add volume around the forehead and temples to balance a wider jawline. Layered cuts with fullness at the top draw attention upward and create balance. Avoid styles that add volume at the jaw, which will make it appear even wider.',
     cuts: [
