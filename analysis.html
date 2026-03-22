@@ -562,11 +562,9 @@ function renderAnalysis(colors) {
     </p>
     <div class="avoid-palette-grid">
       ${data.avoid.map(c => `
-        <div class="avoid-chip palette-chip">
-          <div class="palette-swatch" style="background:${c.hex}; opacity:0.5; position:relative;">
-            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1rem;color:white;text-shadow:0 1px 3px rgba(0,0,0,0.6);">✕</div>
+        <div class="palette-chip">
+          <div class="palette-swatch" style="background:${c.hex};">
           </div>
-          <div class="palette-name" style="opacity:0.65;">${c.name}</div>
         </div>
       `).join('')}
     </div>
