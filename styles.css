@@ -119,6 +119,16 @@ main {
   line-height: 1.2;
   color: var(--cream);
 }
+.page-title-dark{
+    font-family: 'Stoke', serif;
+    font-size: 3rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-align: center;
+    line-height: 1.2;
+    color: var(--deep);
+}
+
 #main-content .page-title {
   font-size: 2.2rem;
   color: var(--deep);

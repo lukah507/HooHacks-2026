@@ -8,6 +8,10 @@
   <link href="styles.css" rel="stylesheet" />
   <script src="/layout.js"></script>
   <link rel="icon" href="/assets/images/icon.png">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+  </script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
   <style>
     /* ── Analysis page extras ── */
     .analysis-hero {
@@ -608,9 +612,25 @@ function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
 /* ── Save as image ── */
 function saveResult() {
-  const hero = document.querySelector('.analysis-hero');
-  if (!hero) return;
-  alert('Tip: Use your browser\'s screenshot or print-to-PDF to save your results!');
+  const mainContent = document.getElementById('main-content');
+  if (!mainContent) return;
+
+  html2canvas(mainContent, {
+    backgroundColor: '#FCF9EA', // Match your cream background
+    scale: 2, // Higher resolution
+    useCORS: true,
+    allowTaint: true,
+    width: mainContent.scrollWidth,
+    height: mainContent.scrollHeight,
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'color-analysis.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }).catch(err => {
+    console.error('Screenshot failed:', err);
+    alert('Screenshot failed. Try using your browser\'s built-in screenshot tool.');
+  });
 }
 </script>
 </body>
