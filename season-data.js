@@ -10,7 +10,7 @@ const SEASON_DATA = {
     oneWordSum: 'Neutral-warm',
     traits: [
       { icon: '🌈', text: 'Extremely saturated and bright colors suit you best' },
-      { icon: '🔀', text: 'Flows from Winter into Spring — neutral-warm colouring' },
+      { icon: '🔀', text: 'Flows from Winter into Spring — neutral-warm coloring' },
       { icon: '⚡', text: 'High contrast patterns work well: geometric, dotty, busy, or stylised flowers' },
       { icon: '🚫', text: 'Avoid muted or toned-down colors — they make you look muddy' },
     ],
@@ -57,7 +57,7 @@ const SEASON_DATA = {
     emoji: '🌸',
     oneWordSum: 'Intensely warm',
     traits: [
-      { icon: '☀️', text: 'Intensely warm and sunny colouring with no trace of coolness' },
+      { icon: '☀️', text: 'Intensely warm and sunny coloring with no trace of coolness' },
       { icon: '🎨', text: 'Colors are reminiscent of coloring pencils — clear, warm, and bright' },
       { icon: '🚫', text: 'Does not tolerate cool or muted colors at all' },
       { icon: '🌿', text: 'Hair often golden, strawberry, or auburn; eyes warm blue, green, hazel, or brown' },
@@ -143,7 +143,7 @@ const SEASON_DATA = {
       { hex: '#4B0082', name: 'Dark Purple' },
     ],
     avoidNote: 'Avoid dark and heavy colors, cool icy tones, and overly saturated colors like burnt orange or neon — you will disappear behind them. No large elements or stiff geometric prints.',
-    tip: 'Gold is the most foolproof metal choice. Keep everything light, fresh, and sweet — like your colouring.',
+    tip: 'Gold is the most foolproof metal choice. Keep everything light, fresh, and sweet — like your coloring.',
   },
 
   // ── SUMMER ──────────────────────────────────────────
@@ -250,7 +250,7 @@ const SEASON_DATA = {
     emoji: '🌫️',
     oneWordSum: 'Neutral-cool, softest',
     traits: [
-      { icon: '🌫️', text: 'Softest, most "greyed out" colouring of the Summer family' },
+      { icon: '🌫️', text: 'Softest, most "greyed out" coloring of the Summer family' },
       { icon: '🍂', text: 'Neutral-cool; flows from Summer into Autumn' },
       { icon: '🚫', text: 'Does not tolerate brightness at all' },
       { icon: '🎨', text: 'All colors should be muted, toned-down, and gentle' },
@@ -299,9 +299,9 @@ const SEASON_DATA = {
     emoji: '🍃',
     oneWordSum: 'Neutral-warm, softest',
     traits: [
-      { icon: '🍃', text: 'Softest colouring of the Autumn family — muted and warm' },
+      { icon: '🍃', text: 'Softest coloring of the Autumn family — muted and warm' },
       { icon: '🌅', text: 'Neutral-warm; no brightness at all — palette is extremely toned down' },
-      { icon: '🚫', text: 'Avoid shiny or polished finishes — they overwhelm your subtle colouring' },
+      { icon: '🚫', text: 'Avoid shiny or polished finishes — they overwhelm your subtle coloring' },
       { icon: '🌿', text: 'Natural materials like wood accessories and yellow stones (citrine, amber) are excellent' },
     ],
     palette: [
@@ -423,7 +423,7 @@ const SEASON_DATA = {
     ],
     worstCombos: [
       'Monochromatic: Looks dull unless you combine the absolute lightest and darkest shades',
-      'Neutrals-only: Often appears bland and fails to complement your rich colouring',
+      'Neutrals-only: Often appears bland and fails to complement your rich coloring',
       'Low contrast: Tepid combinations that do not reflect your natural high contrast',
     ],
     avoid: [
@@ -445,7 +445,7 @@ const SEASON_DATA = {
     emoji: '🌑',
     oneWordSum: 'Neutral-cool, darkest',
     traits: [
-      { icon: '🌑', text: 'Darkest colouring of the Winter family — flows from Autumn into Winter' },
+      { icon: '🌑', text: 'Darkest coloring of the Winter family — flows from Autumn into Winter' },
       { icon: '💎', text: 'Neutral-cool with high value contrast between very light and very dark' },
       { icon: '⚡', text: 'Always aim for a mixture of light and dark values to replicate your natural intensity' },
       { icon: '🚫', text: 'Warm and earthy tones make you look unhealthy' },
@@ -567,7 +567,7 @@ const SEASON_DATA = {
       'Bold Patterns: Highly contrasted, geometric, or abstract prints; neon-colored patterns are excellent',
     ],
     worstCombos: [
-      'Monochromatic: All-one-color looks will diminish your vibrant natural colouring',
+      'Monochromatic: All-one-color looks will diminish your vibrant natural coloring',
       'Low Contrast: Any combination that blends together or lacks intensity looks very dull',
       'Toned-down Neutrals: Never wear only black, only white, or only grey without a bright accent',
     ],

@@ -276,7 +276,7 @@
     <main id="main-content" style="max-width:760px; padding-bottom:80px;">
       <div class="loading-state">
         <div class="loading-spinner"></div>
-        Analysing your colours…
+        Analysing your colors…
       </div>
     </main>
   </div>
@@ -469,9 +469,9 @@ const storedPhoto  = sessionStorage.getItem('hoohacks_photo');
 
 if (!storedColors) {
   main.innerHTML = `
-    <p class="page-title">No colours found</p>
+    <p class="page-title">No colors found</p>
     <div class="no-photo">
-      Head back and pick your colours first.<br/>
+      Head back and pick your colors first.<br/>
       <a href="index.html">← Start over</a>
     </div>`;
 } else {
@@ -520,7 +520,7 @@ function renderAnalysis(colors) {
       </div>
       <div class="undertone-pill">
         <div class="undertone-dot" style="background:${result.isDeep ? '#3B2A1A' : result.isLight ? '#FAE8D4' : '#B07850'}"></div>
-        ${result.isDeep ? 'Deep colouring' : result.isLight ? 'Light colouring' : 'Medium colouring'}
+        ${result.isDeep ? 'Deep coloring' : result.isLight ? 'Light coloring' : 'Medium coloring'}
       </div>
       <div class="undertone-pill">
         <div class="undertone-dot" style="background:${result.isMuted ? '#A8A8A8' : result.isVivid ? '#FF6B35' : '#D4926A'}"></div>
@@ -539,7 +539,7 @@ function renderAnalysis(colors) {
   main.appendChild(undertoneSection);
 
   // ── Recommended palette
-  const palSection = makeSection('Your colour palette');
+  const palSection = makeSection('Your color palette');
   palSection.innerHTML += `
     <div class="palette-grid">
       ${data.palette.map(c => `
@@ -554,11 +554,11 @@ function renderAnalysis(colors) {
   `;
   main.appendChild(palSection);
 
-  // ── Colours to avoid
-  const avoidSection = makeSection('Colours to avoid');
+  // ── Colors to avoid
+  const avoidSection = makeSection('Colors to avoid');
   avoidSection.innerHTML += `
     <p style="font-size:0.78rem; color:var(--muted); margin-bottom:16px; line-height:1.7; letter-spacing:0.03em;">
-      These tones work against your natural colouring — they can make you look washed out, sallow, or add unwanted shadows.
+      These tones work against your natural coloring — they can make you look washed out, sallow, or add unwanted shadows.
     </p>
     <div class="avoid-palette-grid">
       ${data.avoid.map(c => `

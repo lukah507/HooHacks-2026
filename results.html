@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Colour Analysis — Seasonal Color Analysis</title>
+  <title>Your Color Analysis — Seasonal Color Analysis</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <link href="styles.css" rel="stylesheet" />
   <script src="/layout.js"></script>
@@ -39,12 +39,12 @@
 
   function buildPage() {
     main.innerHTML = `
-      <p class="page-title">Pick your colours</p>
+      <p class="page-title">Pick your colors</p>
 
       <div class="instruction-banner" id="instruction-banner">
         <div class="step-label">Step <span id="step-num">1</span> of 4 — click on your</div>
         <div class="feature-name" id="feature-name">${FEATURES[0].toUpperCase()}</div>
-        <div id="complete-msg" class="complete-msg" style="display:none;">✓ All colours extracted!</div>
+        <div id="complete-msg" class="complete-msg" style="display:none;">✓ All colors extracted!</div>
         <div class="step-bar" id="step-bar"></div>
       </div>
 
@@ -54,7 +54,7 @@
         <div class="hover-preview" id="hover-preview" style="display:none;"></div>
       </div>
 
-      <p class="swatches-title">Extracted colours</p>
+      <p class="swatches-title">Extracted colors</p>
 
       <div class="color-swatches" id="color-swatches"></div>
 
@@ -62,7 +62,7 @@
         <button class="btn btn-ghost" id="reset-btn">↺ Reset</button>
         <button class="btn btn-ghost" id="back-btn">← Go back</button>
         <button class="btn btn-rose" id="analyze-btn" style="display:none;">
-          Analyze my colours →
+          Analyze my colors →
         </button>
       </div>
     `;
