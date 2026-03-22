@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Colour Analysis — Seasonal Color Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:  #FCF9EA;
+      --blush:  #F2C4C4;
+      --rose:   #D97B7B;
+      --deep:   #2B1A1A;
+      --muted:  #7A5C5C;
+      --border: #E8C8C8;
+      --shadow: rgba(43,26,26,0.12);
+      --green:  #7DAE8E;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--cream);
+      color: var(--deep);
+      font-family: 'DM Mono', monospace;
+      font-size: 15px;
+    }
+
+    #app { min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+
+    header {
+      width: 100%;
+      padding: 28px 40px 20px;
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300; font-size: 1.8rem; letter-spacing: 0.06em;
+    }
+    header span { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 760px;
+      padding: 40px 24px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 300;
+      letter-spacing: 0.04em; text-align: center;
+    }
+
+    /* Instruction banner */
+    .instruction-banner {
+      background: #fff8f8;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 24px;
+      text-align: center;
+      width: 100%;
+      max-width: 560px;
+    }
+    .instruction-banner .step-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .instruction-banner .feature-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--rose);
+    }
+    .instruction-banner .complete-msg {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--green);
+      letter-spacing: 0.06em;
+    }
+
+    /* Step dots */
+    .step-bar {
+      display: flex; gap: 8px; justify-content: center; margin-top: 10px;
+    }
+    .step-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .step-dot.done   { background: var(--rose); }
+    .step-dot.active { background: var(--deep); transform: scale(1.35); }
+
+    /* Canvas wrapper */
+    .canvas-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 560px;
+    }
+
+    #results-canvas {
+      display: block;
+      width: 100%;
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      cursor: crosshair;
+      box-shadow: 0 8px 36px var(--shadow);
+      transition: border-color 0.3s;
+    }
+    #results-canvas.complete {
+      border-color: var(--green);
+      cursor: default;
+    }
+
+    /* Floating click hint */
+    .click-hint {
+      position: absolute;
+      bottom: 14px; left: 50%;
+      transform: translateX(-50%);
+      background: rgba(43,26,26,0.72);
+      color: var(--cream);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      padding: 6px 14px;
+      border-radius: 20px;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.4s;
+      white-space: nowrap;
+    }
+    .click-hint.hidden { opacity: 0; }
+
+    /* Ripple animation on click */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      width: 28px; height: 28px;
+      border: 2px solid var(--rose);
+      transform: translate(-50%, -50%) scale(0);
+      animation: ripple-out 0.5s ease-out forwards;
+      pointer-events: none;
+    }
+    @keyframes ripple-out {
+      to { transform: translate(-50%, -50%) scale(1.8); opacity: 0; }
+    }
+
+    /* Swatches */
+    .swatches-title {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .color-swatches {
+      display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+      width: 100%;
+    }
+
+    .swatch-item {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      transition: transform 0.2s;
+    }
+    .swatch-item.active { transform: translateY(-4px); }
+
+    .swatch {
+      width: 80px; height: 80px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      font-size: 0.58rem; font-weight: 500;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.9);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.45);
+      background: #ede5e5;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .swatch.empty { color: #c0aaaa; }
+    .swatch.filled { border-color: transparent; }
+    .swatch-item.active .swatch {
+      box-shadow: 0 0 0 3px var(--rose);
+      border-color: transparent;
+    }
+    .swatch-checkmark {
+      font-size: 1.1rem;
+      position: absolute;
+      top: 5px; right: 7px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .swatch.filled .swatch-checkmark { opacity: 1; }
+
+    .swatch-hex {
+      font-size: 0.6rem;
+      letter-spacing: 0.03em;
+    }
+
+    .swatch-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 12px 26px;
+      border-radius: 10px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem; letter-spacing: 0.08em; font-weight: 500;
+      cursor: pointer; border: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: opacity 0.18s, transform 0.12s;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-dark  { background: var(--deep); color: var(--cream); }
+    .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--muted); color: var(--deep); }
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+    /* No photo state */
+    .no-photo {
+      text-align: center; color: var(--muted);
+      font-size: 0.85rem; line-height: 1.8;
+      padding: 40px 20px;
+    }
+    .no-photo a {
+      color: var(--rose); text-decoration: none;
+      border-bottom: 1px solid var(--blush);
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>Seasonal Color Analysis</h1>
+    <span>hoo hacks 2026</span>
+  </header>
+
+  <main id="main-content">
+    <!-- Filled by JS -->
+  </main>
+</div>
+
+<script>
+  const FEATURES = ['eyes', 'lips', 'face', 'hair'];
+  let selectedColors = { eyes: null, lips: null, face: null, hair: null };
+  let currentFeatureIndex = 0;
+
+  const main = document.getElementById('main-content');
+  const photo = sessionStorage.getItem('hoohacks_photo');
+
+  if (!photo) {
+    main.innerHTML = `
+      <p class="page-title">No photo found</p>
+      <div class="no-photo">
+        It looks like no photo was submitted.<br/>
+        <a href="index.html">← Go back and upload one</a>
+      </div>`;
+  } else {
+    buildPage();
+  }
+
+  function buildPage() {
+    main.innerHTML = `
+      <p class="page-title">Pick your colours</p>
+
+      <div class="instruction-banner" id="instruction-banner">
+        <div class="step-label">Step <span id="step-num">1</span> of 4 — click on your</div>
+        <div class="feature-name" id="feature-name">${FEATURES[0].toUpperCase()}</div>
+        <div id="complete-msg" class="complete-msg" style="display:none;">✓ All colours extracted!</div>
+        <div class="step-bar" id="step-bar"></div>
+      </div>
+
+      <div class="canvas-wrap" id="canvas-wrap">
+        <canvas id="results-canvas"></canvas>
+        <div class="click-hint" id="click-hint">Click anywhere on the image</div>
+      </div>
+
+      <p class="swatches-title">Extracted colours</p>
+
+      <div class="color-swatches" id="color-swatches"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="reset-btn">↺ Reset</button>
+        <button class="btn btn-ghost" id="back-btn">← Go back</button>
+      </div>
+    `;
+
+    buildStepDots();
+    buildSwatches();
+
+    // Load image onto canvas
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.getElementById('results-canvas');
+      canvas.width  = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      canvas.getContext('2d').drawImage(img, 0, 0);
+    };
+    img.src = photo;
+
+    document.getElementById('results-canvas').addEventListener('click', handleCanvasClick);
+    document.getElementById('reset-btn').addEventListener('click', resetColors);
+    document.getElementById('back-btn').addEventListener('click', () => { window.location.href = 'index.html'; });
+  }
+
+  function handleCanvasClick(e) {
+    if (currentFeatureIndex >= FEATURES.length) return;
+
+    const canvas = document.getElementById('results-canvas');
+    const rect   = canvas.getBoundingClientRect();
+    const x = (e.clientX - rect.left) * (canvas.width  / rect.width);
+    const y = (e.clientY - rect.top)  * (canvas.height / rect.height);
+
+    const [r, g, b] = canvas.getContext('2d').getImageData(x, y, 1, 1).data;
+    const hex = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+
+    // Show ripple at click point
+    spawnRipple(e.clientX - rect.left, e.clientY - rect.top);
+
+    const feature = FEATURES[currentFeatureIndex];
+    selectedColors[feature] = hex;
+
+    // Update swatch
+    const swatch = document.getElementById('swatch-' + feature);
+    swatch.style.background = hex;
+    swatch.classList.remove('empty');
+    swatch.classList.add('filled');
+    swatch.querySelector('.swatch-hex').textContent = hex.toUpperCase();
+
+    currentFeatureIndex++;
+    updateInstruction();
+    highlightActiveSwatch();
+
+    // Hide hint after first click
+    document.getElementById('click-hint').classList.add('hidden');
+  }
+
+  function spawnRipple(x, y) {
+    const wrap = document.getElementById('canvas-wrap');
+    const r = document.createElement('div');
+    r.className = 'ripple';
+    r.style.left = x + 'px';
+    r.style.top  = y + 'px';
+    wrap.appendChild(r);
+    r.addEventListener('animationend', () => r.remove());
+  }
+
+  function updateInstruction() {
+    const isComplete = currentFeatureIndex >= FEATURES.length;
+    const featureEl  = document.getElementById('feature-name');
+    const completeEl = document.getElementById('complete-msg');
+    const stepLabel  = document.querySelector('.step-label');
+    const canvas     = document.getElementById('results-canvas');
+
+    if (isComplete) {
+      featureEl.style.display  = 'none';
+      completeEl.style.display = 'block';
+      stepLabel.style.display  = 'none';
+      canvas.classList.add('complete');
+    } else {
+      document.getElementById('step-num').textContent = currentFeatureIndex + 1;
+      featureEl.textContent = FEATURES[currentFeatureIndex].toUpperCase();
+    }
+
+    // Update step dots
+    buildStepDots();
+  }
+
+  function buildStepDots() {
+    const bar = document.getElementById('step-bar');
+    if (!bar) return;
+    bar.innerHTML = '';
+    FEATURES.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'step-dot' +
+        (i < currentFeatureIndex ? ' done' : '') +
+        (i === currentFeatureIndex ? ' active' : '');
+      bar.appendChild(d);
+    });
+  }
+
+  function buildSwatches() {
+    const container = document.getElementById('color-swatches');
+    container.innerHTML = '';
+    FEATURES.forEach((f, i) => {
+      const item = document.createElement('div');
+      item.className = 'swatch-item' + (i === 0 ? ' active' : '');
+      item.id = 'swatch-item-' + f;
+
+      const color = selectedColors[f];
+      const swatch = document.createElement('div');
+      swatch.className = 'swatch' + (color ? ' filled' : ' empty');
+      swatch.id = 'swatch-' + f;
+      if (color) swatch.style.background = color;
+
+      swatch.innerHTML = `
+        <span class="swatch-checkmark">✓</span>
+        <span class="swatch-hex">${color ? color.toUpperCase() : '—'}</span>
+      `;
+
+      const label = document.createElement('div');
+      label.className = 'swatch-label';
+      label.textContent = f;
+
+      item.appendChild(swatch);
+      item.appendChild(label);
+      container.appendChild(item);
+    });
+  }
+
+  function highlightActiveSwatch() {
+    FEATURES.forEach((f, i) => {
+      const item = document.getElementById('swatch-item-' + f);
+      if (item) item.classList.toggle('active', i === currentFeatureIndex);
+    });
+  }
+
+  function resetColors() {
+    selectedColors = { eyes: null, lips: null, face: null, hair: null };
+    currentFeatureIndex = 0;
+
+    // Rebuild UI
+    buildSwatches();
+    updateInstruction();
+    highlightActiveSwatch();
+    document.getElementById('click-hint').classList.remove('hidden');
+
+    // Redraw canvas
+    const canvas = document.getElementById('results-canvas');
+    canvas.classList.remove('complete');
+    const img = new Image();
+    img.onload = () => canvas.getContext('2d').drawImage(img, 0, 0);
+    img.src = photo;
+
+    // Restore step label
+    const stepLabel = document.querySelector('.step-label');
+    if (stepLabel) stepLabel.style.display = '';
+    const featureEl  = document.getElementById('feature-name');
+    const completeEl = document.getElementById('complete-msg');
+    if (featureEl)  featureEl.style.display  = '';
+    if (completeEl) completeEl.style.display = 'none';
+  }
+</script>
+</body>
+</html>

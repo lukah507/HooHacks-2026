@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seasonal Color Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:  #FCF9EA;
+      --blush:  #F2C4C4;
+      --rose:   #D97B7B;
+      --deep:   #2B1A1A;
+      --muted:  #7A5C5C;
+      --border: #E8C8C8;
+      --shadow: rgba(43,26,26,0.12);
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--cream);
+      color: var(--deep);
+      font-family: 'DM Mono', monospace;
+      font-size: 15px;
+    }
+
+    #app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      padding: 28px 40px 20px;
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.8rem;
+      letter-spacing: 0.06em;
+    }
+    header span {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 680px;
+      padding: 48px 24px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .instructions {
+      max-width: 440px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.8;
+      letter-spacing: 0.03em;
+    }
+    .instructions strong {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--deep);
+      margin-bottom: 8px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Upload zone */
+    .upload-zone {
+      border: 1.5px dashed var(--blush);
+      background: #fff8f8;
+      border-radius: 16px;
+      padding: 40px 28px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .upload-zone:hover { border-color: var(--rose); background: #fff2f2; }
+    .upload-zone label { cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+    .upload-icon {
+      width: 48px; height: 48px;
+      border: 1.5px solid var(--blush);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--rose);
+    }
+    .label-text { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.06em; }
+    .label-text span { display: block; font-size: 0.7rem; margin-top: 4px; opacity: 0.7; }
+    #file-input { display: none; }
+
+    #upload-preview {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 14px;
+      box-shadow: 0 4px 28px var(--shadow);
+      display: none;
+    }
+    #upload-preview.visible { display: block; }
+
+    /* Divider */
+    .divider {
+      display: flex; align-items: center; gap: 12px;
+      width: 100%; max-width: 400px;
+      color: var(--muted); font-size: 0.72rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* Buttons */
+    .btn {
+      padding: 13px 28px;
+      border-radius: 10px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.18s, transform 0.12s;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-dark  { background: var(--deep); color: var(--cream); }
+    .btn-rose  { background: var(--blush); color: var(--deep); }
+    .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+    /* Camera modal */
+    .backdrop {
+      position: fixed; inset: 0;
+      background: rgba(20,8,8,0.72);
+      display: none; align-items: center; justify-content: center;
+      z-index: 999;
+      backdrop-filter: blur(3px);
+    }
+    .backdrop.open { display: flex; }
+    .modal {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 32px;
+      width: min(460px, 94vw);
+      display: flex; flex-direction: column; align-items: center;
+      gap: 20px;
+      box-shadow: 0 30px 70px rgba(20,8,8,0.35);
+    }
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 300; letter-spacing: 0.06em;
+    }
+    #camera-video { width: 100%; border-radius: 12px; background: #111; display: block; }
+    .camera-error { font-size: 0.78rem; color: var(--rose); text-align: center; line-height: 1.5; }
+  </style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>Seasonal Color Analysis</h1>
+    <span>hoo hacks 2026</span>
+  </header>
+
+  <main>
+    <p class="page-title">Find your season</p>
+
+    <p class="instructions">
+      <strong>Before you begin</strong>
+      Remove all makeup and face a source of natural light.
+      Ensure there are no colourful reflections on your skin before submitting.
+    </p>
+
+    <div class="upload-zone">
+      <label for="file-input">
+        <div class="upload-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
+        <div class="label-text">
+          Upload a photo
+          <span>JPG, PNG, WEBP — click to browse</span>
+        </div>
+      </label>
+      <input type="file" id="file-input" accept="image/*" />
+    </div>
+
+    <img id="upload-preview" alt="Preview" />
+
+    <div class="divider">or</div>
+
+    <button class="btn btn-dark" id="open-camera-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+        <circle cx="12" cy="13" r="4"/>
+      </svg>
+      Take a photo
+    </button>
+
+    <button class="btn btn-rose" id="submit-btn">
+      Submit →
+    </button>
+  </main>
+</div>
+
+<!-- Camera Modal -->
+<div class="backdrop" id="camera-backdrop">
+  <div class="modal">
+    <p class="modal-title">Take a photo</p>
+    <p class="camera-error" id="camera-error" style="display:none;"></p>
+    <video id="camera-video" autoplay playsinline muted></video>
+    <div class="btn-row">
+      <button class="btn btn-ghost" id="cancel-camera-btn">Cancel</button>
+      <button class="btn btn-dark" id="capture-btn" disabled>Starting camera…</button>
+    </div>
+    <canvas id="capture-canvas" style="display:none;"></canvas>
+  </div>
+</div>
+
+<script>
+  let savedPhoto = null;
+
+  const fileInput   = document.getElementById('file-input');
+  const previewImg  = document.getElementById('upload-preview');
+
+  fileInput.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      savedPhoto = ev.target.result;
+      previewImg.src = savedPhoto;
+      previewImg.classList.add('visible');
+    };
+    reader.readAsDataURL(file);
+  });
+
+  document.getElementById('submit-btn').addEventListener('click', () => {
+    if (!savedPhoto) {
+      alert('Please upload or take a photo first!');
+      return;
+    }
+    // Pass the photo to the next page via sessionStorage
+    sessionStorage.setItem('hoohacks_photo', savedPhoto);
+    window.location.href = 'results.html';
+  });
+
+  /* ── Camera ── */
+  const backdrop   = document.getElementById('camera-backdrop');
+  const video      = document.getElementById('camera-video');
+  const captureBtn = document.getElementById('capture-btn');
+  const camError   = document.getElementById('camera-error');
+  const capCanvas  = document.getElementById('capture-canvas');
+  let mediaStream  = null;
+
+  document.getElementById('open-camera-btn').addEventListener('click', () => {
+    camError.style.display = 'none';
+    captureBtn.disabled = true;
+    captureBtn.textContent = 'Starting camera…';
+    backdrop.classList.add('open');
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        mediaStream = stream;
+        video.srcObject = stream;
+        captureBtn.disabled = false;
+        captureBtn.textContent = 'Capture photo';
+      })
+      .catch(() => {
+        camError.textContent = 'Could not access your camera. Please allow camera permission and try again.';
+        camError.style.display = 'block';
+      });
+  });
+
+  function closeCamera() {
+    if (mediaStream) { mediaStream.getTracks().forEach(t => t.stop()); mediaStream = null; }
+    backdrop.classList.remove('open');
+  }
+
+  document.getElementById('cancel-camera-btn').addEventListener('click', closeCamera);
+  backdrop.addEventListener('click', e => { if (e.target === backdrop) closeCamera(); });
+
+  captureBtn.addEventListener('click', () => {
+    capCanvas.width  = video.videoWidth;
+    capCanvas.height = video.videoHeight;
+    capCanvas.getContext('2d').drawImage(video, 0, 0);
+    savedPhoto = capCanvas.toDataURL('image/png');
+    previewImg.src = savedPhoto;
+    previewImg.classList.add('visible');
+    closeCamera();
+  });
+</script>
+</body>
+</html>
