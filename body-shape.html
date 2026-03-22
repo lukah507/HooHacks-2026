@@ -56,7 +56,7 @@
       margin-bottom: 6px;
     }
     .shape-tagline {
-      font-size: 0.72rem;
+      font-size: 1rem;
       letter-spacing: 0.08em;
       color: var(--muted);
       line-height: 1.5;
@@ -280,11 +280,11 @@
 <script src="body-data.js"></script>
 <script>
 const SHAPES = [
-  { key: 'hourglass',          label: 'Hourglass',          emoji: '⌛', tagline: 'defined waist with equal bust and hips' },
-  { key: 'triangle',           label: 'Triangle',           emoji: '🔺', tagline: 'bust and waist narrower than hips' },
-  { key: 'inverted_triangle',  label: 'Inverted Triangle',  emoji: '🔻', tagline: 'broad shouldered with narrow hips' },
-  { key: 'rectangle',          label: 'Rectangle',          emoji: '▬',  tagline: 'straight waisted with equal bust and hips' },
-  { key: 'oval',               label: 'Oval',               emoji: '🥚', tagline: 'waist wider than bust and hips' },
+  { key: 'hourglass',          label: 'Hourglass',          emoji: '⌛', tagline: 'Defined waist with equal bust and hips' },
+  { key: 'triangle',           label: 'Triangle',           emoji: '🔺', tagline: 'Bust and waist narrower than hips' },
+  { key: 'inverted_triangle',  label: 'Inverted Triangle',  emoji: '🔻', tagline: 'Broad shouldered with narrow hips' },
+  { key: 'rectangle',          label: 'Rectangle',          emoji: '🚪',  tagline: 'Straight waisted with equal bust and hips' },
+  { key: 'oval',               label: 'Oval',               emoji: '🥚', tagline: 'Waist wider than bust and hips' },
 ];
 
 let selectedShape = null;
@@ -306,8 +306,8 @@ function buildSelectionPage() {
     <p class="page-title">Body Shape Analysis</p>
 
     <div class="instruction-banner" id="instruction-banner">
-      <div class="step-label">Step 1 — Select your body shape</div>
-      <div class="feature-name" style="font-size:1rem; letter-spacing:0.1em; color:var(--muted); font-family:'DM Mono',monospace;">
+      <div class="step-label">Select your body shape</div>
+      <div class="feature-name" style="font-size:1rem; letter-spacing:0.1em; color:var(--muted); font-family:'Cormorant Garamond', serif;">
         Not sure? Click each card to read its characteristics
       </div>
     </div>
@@ -420,20 +420,6 @@ function renderResult(shapeKey) {
     </p>
   `;
   main.appendChild(hero);
-
-  // ── Characteristics
-  const charSection = makeSection('Your characteristics');
-  charSection.innerHTML += `
-    <div class="traits-list">
-      ${data.characteristics.map(c => `
-        <div class="trait-row">
-          <div class="trait-icon" style="background:#fff8f8; border:1px solid var(--border);">${c.icon}</div>
-          <span>${c.text}</span>
-        </div>
-      `).join('')}
-    </div>
-  `;
-  main.appendChild(charSection);
 
   // ── Tops
   const topsSection = makeSection('✦ Best tops for you');

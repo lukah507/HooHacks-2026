@@ -11,9 +11,7 @@ const BODY_DATA = {
     oneWordSum: 'Balanced & Curvy',
     characteristics: [
       { icon: '📐', text: 'Your bust and hips are roughly equal in width' },
-      { icon: '✂️', text: 'Your waist is well-defined and noticeably narrower than your bust and hips' },
-      { icon: '💫', text: 'You likely have a fuller chest and rounder derrière' },
-      { icon: '🌀', text: 'You may describe yourself as curvy or voluptuous' },
+      { icon: '✂️', text: 'Your waist is well-defined and noticeably narrower than your bust and hips' }
     ],
     dressingTip: 'Flaunt your curves by accentuating your smallest point — your waist. Wrap-style tops and dresses are your best friend. Opt for high-rise bottoms to elongate your legs. Avoid boxy or low-rise styles that hide your shape.',
     tops: [
@@ -67,9 +65,7 @@ const BODY_DATA = {
     oneWordSum: 'Pear-Shaped & Defined',
     characteristics: [
       { icon: '📐', text: 'Your hips are wider than your bust and shoulders' },
-      { icon: '✂️', text: 'Your waist is defined and narrower than your hips' },
-      { icon: '💫', text: 'You may have narrow or sloping shoulders' },
-      { icon: '🌀', text: 'Your hips and thighs are the first place you notice weight changes' },
+      { icon: '✂️', text: 'Your waist is defined and narrower than your hips' }
     ],
     dressingTip: 'Draw attention upward with bold, structured, or printed tops. Balance your hips with roomier cuts and dark washes on the bottom. High-rise styles make your waist look tiny and legs long. Avoid anything that adds volume at the hip.',
     tops: [
@@ -123,9 +119,7 @@ const BODY_DATA = {
     oneWordSum: 'Athletic & Strong',
     characteristics: [
       { icon: '📐', text: 'Your shoulders and bust are wider than your hips' },
-      { icon: '✂️', text: 'You have a smaller derrière and narrower hips' },
-      { icon: '💫', text: 'You consider yourself to have broad or square shoulders' },
-      { icon: '🌀', text: 'Your upper body is the first place you notice weight changes' },
+      { icon: '✂️', text: 'You have a smaller derrière and narrower hips' }
     ],
     dressingTip: 'Celebrate your strong shoulders with open necklines that frame your face. Add volume and definition to the lower half to balance your proportions. Waist-cinching belts and high-rises create the illusion of curves. Avoid pairing voluminous tops with tight-fitting bottoms.',
     tops: [
@@ -179,9 +173,7 @@ const BODY_DATA = {
     oneWordSum: 'Lean & Athletic',
     characteristics: [
       { icon: '📐', text: 'Your bust, waist, and hips are roughly equal in width' },
-      { icon: '✂️', text: 'Your waist is straight rather than curvy or cinched' },
-      { icon: '💫', text: 'You are likely on the taller side or have an athletic build' },
-      { icon: '🌀', text: 'Weight distributes fairly evenly across your whole body' },
+      { icon: '✂️', text: 'Your waist is straight rather than curvy or cinched' }
     ],
     dressingTip: 'Create the illusion of curves by adding volume evenly to your bust and hips. High-rise fits and waist-cinching belts define your midsection. You look stunning in structured, tailored pieces. Avoid boxy cuts that emphasize your straight silhouette.',
     tops: [
@@ -235,9 +227,7 @@ const BODY_DATA = {
     oneWordSum: 'Full & Rounded',
     characteristics: [
       { icon: '📐', text: 'Your waist is equal to or greater than your hips and bust' },
-      { icon: '✂️', text: 'Your waist is undefined or carries more fullness than other areas' },
-      { icon: '💫', text: 'You tend to have a larger bust and a fuller midsection' },
-      { icon: '🌀', text: 'Your midsection is the first area where you notice weight changes' },
+      { icon: '✂️', text: 'Your waist is undefined or carries more fullness than other areas' }
     ],
     dressingTip: 'Use silhouettes and lines to draw attention away from your midsection and elongate your figure. Stick to small-scale prints and vertical lines for a slimming effect. V-necks and open necklines draw the eye upward. Avoid cropped fits and voluminous ruffles at the waist.',
     tops: [
