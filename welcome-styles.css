@@ -1,0 +1,138 @@
+/* Reset & Box Model */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Design Tokens */
+:root {
+  --cream:  #FCF9EA;
+  --blush:  #F2C4C4;
+  --rose:   #D97B7B;
+  --deep:   #2B1A1A;
+  --muted:  #4f3a3a;
+  --border: #E8C8C8;
+  --shadow: rgba(43,26,26,0.12);
+  --green:  #7DAE8E;
+}
+
+/* Base Styles */
+html, body {
+  min-height: 100%;
+  background: var(--cream);
+  color: var(--deep);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  padding-top: 40px;
+}
+
+/* Welcome page */
+.welcome-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+#learn-more-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    overflow-y: auto;
+}
+
+.page-title {
+    margin-bottom: 20px; 
+    margin-top: -50px;
+    text-align: center;
+    font-size: 3rem;
+    font-family: 'Stoke', serif;
+    font-weight: lighter;
+}
+
+.welcome-text {
+    max-width: 700px;
+    text-align: center;
+    font-size: 1.25rem;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--deep);
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+}
+
+.learn-text {
+    max-width: 800px;
+    text-align: center;
+    font-size: 1.25rem;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--deep);
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+    font-weight: bolder;
+}
+
+/* Layout */
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  width: 100%;
+  padding: 30px;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to right, #FCF9EA, #FFF7F8);
+}
+
+header h1 {
+  font-family: 'Stoke', serif;
+  font-weight: 300;
+  font-size: 1.8rem;
+  letter-spacing: 0.06em;
+}
+
+.btn {
+  padding: 13px 28px;
+  border-radius: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  font-weight: 400;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.3s;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn-start  { background: var(--blush); color: var(--deep); }
+.btn-learn { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+.btn:hover{
+    transform: scale(1.2);
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.flex-child {
+    width: 30%;
+}
