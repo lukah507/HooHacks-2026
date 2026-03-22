@@ -283,6 +283,7 @@
   </main>
 </div>
 
+<script src="season-data.js"></script>
 <script>
 /* ═══════════════════════════════════════════════════
    COLOR MATH UTILITIES
@@ -415,35 +416,35 @@ function classifySeason(colors) {
 
   const subMap = {
     spring: {
-      spring: 'True Spring',
-      summer: 'Light Spring',
-      autumn: 'Warm Spring',
-      winter: 'Bright Spring',
+      spring: 'true_spring',
+      summer: 'light_spring',
+      autumn: 'true_spring',
+      winter: 'bright_spring',
     },
     summer: {
-      summer: 'True Summer',
-      spring: 'Light Summer',
-      winter: 'Cool Summer',
-      autumn: 'Soft Summer',
+      summer: 'true_summer',
+      spring: 'light_summer',
+      winter: 'true_summer',
+      autumn: 'soft_summer',
     },
     autumn: {
-      autumn: 'True Autumn',
-      spring: 'Warm Autumn',
-      winter: 'Deep Autumn',
-      summer: 'Soft Autumn',
+      autumn: 'true_autumn',
+      spring: 'soft_autumn',
+      winter: 'dark_autumn',
+      summer: 'soft_autumn',
     },
     winter: {
-      winter: 'True Winter',
-      spring: 'Bright Winter',
-      summer: 'Cool Winter',
-      autumn: 'Deep Winter',
+      winter: 'true_winter',
+      spring: 'bright_winter',
+      summer: 'true_winter',
+      autumn: 'dark_winter',
     },
   };
 
-  const subSeason = subMap[season]?.[runner] || subMap[season]?.[season];
-  console.log(subSeason);
+  const subSeasonKey = subMap[season]?.[runner] || `true_${season}`;
+  const subSeason = subSeasonKey.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 
-  return { season, subSeason, scores, isWarm, isCool, isDeep, isLight, isVivid, isMuted, contrast };
+  return { season, subSeason, subSeasonKey, scores, isWarm, isCool, isDeep, isLight, isVivid, isMuted, contrast };
 }
 
 /* ═══════════════════════════════════════════════════
@@ -458,143 +459,6 @@ function generateHarmonies(baseHex) {
   };
 }
 
-/* ═══════════════════════════════════════════════════
-   SEASON DATA
-═══════════════════════════════════════════════════ */
-const SEASON_DATA = {
-  spring: {
-    heroGradient: 'linear-gradient(135deg, #FFF5E6 0%, #FFE8CC 40%, #FDDBB4 100%)',
-    textColor: '#5C3A1E',
-    badgeBg: '#FFD49A',
-    badgeColor: '#7A4A10',
-    emoji: '🌸',
-    traits: [
-      { icon: '☀️', text: 'Warm undertone — your veins appear greenish' },
-      { icon: '✨', text: 'Light to medium colouring with bright contrast' },
-      { icon: '🌿', text: 'Hair often has golden, strawberry, or auburn warmth' },
-      { icon: '👁️', text: 'Eyes tend to be blue, green, hazel, or warm brown' },
-    ],
-    palette: [
-      { hex: '#F4A460', name: 'Sandy Brown' },
-      { hex: '#FFB347', name: 'Apricot' },
-      { hex: '#90EE90', name: 'Light Green' },
-      { hex: '#87CEEB', name: 'Sky Blue' },
-      { hex: '#FF7F7F', name: 'Coral' },
-      { hex: '#FFD700', name: 'Golden' },
-      { hex: '#98FB98', name: 'Mint' },
-      { hex: '#F08080', name: 'Salmon' },
-      { hex: '#FFFACD', name: 'Lemon' },
-      { hex: '#FFA07A', name: 'Peach' },
-    ],
-    avoid: [
-      { hex: '#000000', name: 'Black' },
-      { hex: '#808080', name: 'Cool Grey' },
-      { hex: '#800080', name: 'Purple' },
-      { hex: '#000080', name: 'Navy' },
-    ],
-    neutrals: ['#F5DEB3','#D2B48C','#E8C8A0'],
-    tip: 'Wear gold jewellery over silver. Your best neutrals are warm camel, peach, and ivory — avoid stark black and white.',
-  },
-  summer: {
-    heroGradient: 'linear-gradient(135deg, #E8F4F8 0%, #D6EAF8 40%, #C8E6F5 100%)',
-    textColor: '#1A3A5C',
-    badgeBg: '#AACFE0',
-    badgeColor: '#1A3A5C',
-    emoji: '🌊',
-    traits: [
-      { icon: '🫧', text: 'Cool undertone — your veins appear blue or purple' },
-      { icon: '🌫️', text: 'Light to medium colouring, often slightly muted' },
-      { icon: '🌿', text: 'Hair is often ash blonde, ash brown, or mousy with no warm tones' },
-      { icon: '👁️', text: 'Eyes are often blue, grey, or soft green' },
-    ],
-    palette: [
-      { hex: '#B0C4DE', name: 'Steel Blue' },
-      { hex: '#DDA0DD', name: 'Plum Rose' },
-      { hex: '#E6E6FA', name: 'Lavender' },
-      { hex: '#C8B8D4', name: 'Mauve' },
-      { hex: '#99C5C4', name: 'Dusty Teal' },
-      { hex: '#D4A5A5', name: 'Dusty Rose' },
-      { hex: '#A8B8C8', name: 'Powder Blue' },
-      { hex: '#C0C0C0', name: 'Soft Silver' },
-      { hex: '#B8CED8', name: 'Misty Blue' },
-      { hex: '#CFAAB4', name: 'Soft Pink' },
-    ],
-    avoid: [
-      { hex: '#FF4500', name: 'Orange' },
-      { hex: '#8B4513', name: 'Rust' },
-      { hex: '#FFD700', name: 'Bright Gold' },
-      { hex: '#FF6347', name: 'Tomato Red' },
-    ],
-    neutrals: ['#C8C8C8','#D8D0D8','#BCBCBC'],
-    tip: 'Silver jewellery is your best friend. Wear dusty, muted versions of colours rather than bright ones. Your best neutrals are soft grey, rose-brown, and lavender.',
-  },
-  autumn: {
-    heroGradient: 'linear-gradient(135deg, #FFF0E0 0%, #F5DEB3 40%, #DEB887 100%)',
-    textColor: '#4A2800',
-    badgeBg: '#C4956A',
-    badgeColor: '#FFF5E8',
-    emoji: '🍂',
-    traits: [
-      { icon: '🔥', text: 'Warm, golden or olive undertone' },
-      { icon: '🌰', text: 'Medium to deep colouring with rich, muted tones' },
-      { icon: '🍁', text: 'Hair is often brown, auburn, copper, or deep golden' },
-      { icon: '👁️', text: 'Eyes are often brown, hazel, olive green, or amber' },
-    ],
-    palette: [
-      { hex: '#B7410E', name: 'Rust' },
-      { hex: '#D4A017', name: 'Mustard' },
-      { hex: '#556B2F', name: 'Olive' },
-      { hex: '#8B4513', name: 'Saddle Brown' },
-      { hex: '#CD853F', name: 'Peru' },
-      { hex: '#6B8E23', name: 'Moss Green' },
-      { hex: '#A0522D', name: 'Sienna' },
-      { hex: '#CC7722', name: 'Ochre' },
-      { hex: '#704214', name: 'Chocolate' },
-      { hex: '#C65D07', name: 'Burnt Orange' },
-    ],
-    avoid: [
-      { hex: '#FF69B4', name: 'Hot Pink' },
-      { hex: '#00FFFF', name: 'Cyan' },
-      { hex: '#C0C0C0', name: 'Cool Silver' },
-      { hex: '#E6E6FA', name: 'Lavender' },
-    ],
-    neutrals: ['#8B7355','#C4A882','#6B5237'],
-    tip: 'Gold jewellery enhances your warmth. Your best neutrals are warm brown, camel, and olive. Avoid cool, icy tones which wash you out.',
-  },
-  winter: {
-    heroGradient: 'linear-gradient(135deg, #E8E8F0 0%, #D0D0E8 40%, #B8B8D8 100%)',
-    textColor: '#0A0A2A',
-    badgeBg: '#3A3A5C',
-    badgeColor: '#E8E8FF',
-    emoji: '❄️',
-    traits: [
-      { icon: '💎', text: 'Cool or neutral undertone, often with blue or pink cast' },
-      { icon: '⚡', text: 'High contrast between skin, hair, and eyes' },
-      { icon: '🖤', text: 'Hair is often very dark — black, dark brown — or platinum blonde' },
-      { icon: '👁️', text: 'Eyes are often dark brown, black, icy blue, or steel grey' },
-    ],
-    palette: [
-      { hex: '#000000', name: 'True Black' },
-      { hex: '#FFFFFF', name: 'Pure White' },
-      { hex: '#0047AB', name: 'Cobalt Blue' },
-      { hex: '#800020', name: 'Burgundy' },
-      { hex: '#008080', name: 'Teal' },
-      { hex: '#4B0082', name: 'Indigo' },
-      { hex: '#DC143C', name: 'Crimson' },
-      { hex: '#228B22', name: 'Forest Green' },
-      { hex: '#8B008B', name: 'Dark Magenta' },
-      { hex: '#C0C0C0', name: 'Silver' },
-    ],
-    avoid: [
-      { hex: '#F4A460', name: 'Warm Tan' },
-      { hex: '#DEB887', name: 'Burlywood' },
-      { hex: '#F5DEB3', name: 'Wheat' },
-      { hex: '#DAA520', name: 'Goldenrod' },
-    ],
-    neutrals: ['#1C1C2E','#FAFAFA','#808098'],
-    tip: 'Silver and white gold jewellery are ideal. You can wear stark black and white that would overwhelm other seasons. Avoid warm, earthy tones which dull your natural drama.',
-  },
-};
 
 /* ═══════════════════════════════════════════════════
    PAGE RENDER
@@ -618,7 +482,7 @@ if (!storedColors) {
 
 function renderAnalysis(colors) {
   const result   = classifySeason(colors);
-  const data     = SEASON_DATA[result.season];
+  const data = SEASON_DATA[result.subSeasonKey] || SEASON_DATA[`true_${result.season}`];
   const harmonies = generateHarmonies(colors.face);
 
   main.innerHTML = '';
@@ -634,9 +498,8 @@ function renderAnalysis(colors) {
     <div class="season-badge" style="background:${data.badgeBg}; color:${data.badgeColor};">
       ${data.emoji} Your season
     </div>
-    <div class="season-name">${capitalize(result.season)}</div>
-    <div class="season-sub">${result.subSeason}</div>
-    
+    <div class="season-name">${result.subSeason}</div>
+    <div class="season-sub" style="font-style:normal; font-size:1rem; letter-spacing:0.14em;  opacity:0.6;">${data.oneWordSum}</div>
     <div class="your-colors-row">
       ${['face','eyes','lips','hair'].map(f => `
         <div class="your-color-chip">
@@ -711,6 +574,34 @@ function renderAnalysis(colors) {
     </div>
   `;
   main.appendChild(avoidSection);
+
+  // ── Best combinations
+  const bestSection = makeSection('Best combinations');
+  bestSection.innerHTML += `
+    <div class="traits-list">
+      ${data.bestCombos.map(c => `
+        <div class="trait-row">
+          <div class="trait-icon" style="background:#e8f5e9; border:1px solid #c8e6c9;">✓</div>
+          <span>${c}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  main.appendChild(bestSection);
+
+  // ── Worst combinations
+  const worstSection = makeSection('Worst combinations');
+  worstSection.innerHTML += `
+    <div class="traits-list">
+      ${data.worstCombos.map(c => `
+        <div class="trait-row">
+          <div class="trait-icon" style="background:#fce4ec; border:1px solid #f8bbd0;">✕</div>
+          <span>${c}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  main.appendChild(worstSection);
 
   // ── Action buttons
   const btnRow = document.createElement('div');
