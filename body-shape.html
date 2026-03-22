@@ -56,7 +56,7 @@
       margin-bottom: 6px;
     }
     .shape-tagline {
-      font-size: 1rem;
+      font-size: 1.2rem;
       letter-spacing: 0.08em;
       color: var(--muted);
       line-height: 1.5;
@@ -90,7 +90,7 @@
       display: flex;
       gap: 8px;
       align-items: flex-start;
-      font-size: 0.78rem;
+      font-size: 1.2rem;
       line-height: 1.6;
       color: var(--muted);
       margin-bottom: 6px;
@@ -132,7 +132,7 @@
 
     .season-badge {
       display: inline-block;
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       padding: 5px 14px;
@@ -151,7 +151,7 @@
     }
     .season-sub {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
+      font-size: 1.2rem;
       font-weight: 300;
       font-style: normal;
       letter-spacing: 0.14em;
@@ -185,7 +185,7 @@
       display: flex;
       align-items: flex-start;
       gap: 12px;
-      font-size: 0.8rem;
+      font-size: 1.2rem;
       line-height: 1.6;
       letter-spacing: 0.02em;
     }
@@ -215,14 +215,14 @@
     }
     .clothing-item-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 400;
       letter-spacing: 0.05em;
       color: var(--deep);
       margin-bottom: 4px;
     }
     .clothing-item-desc {
-      font-size: 0.78rem;
+      font-size: 1.2rem;
       color: var(--muted);
       line-height: 1.6;
       letter-spacing: 0.02em;
@@ -249,7 +249,7 @@
     .loading-state {
       text-align: center;
       padding: 80px 20px;
-      font-size: 0.82rem;
+      font-size: 0.92rem;
       color: var(--muted);
       letter-spacing: 0.08em;
     }
@@ -307,7 +307,7 @@ function buildSelectionPage() {
 
     <div class="instruction-banner" id="instruction-banner">
       <div class="step-label">Select your body shape</div>
-      <div class="feature-name" style="font-size:1rem; letter-spacing:0.1em; color:var(--muted); font-family:'Cormorant Garamond', serif;">
+      <div class="feature-name" style="font-size:1.2rem; letter-spacing:0.1em; color:var(--muted); font-family:'Cormorant Garamond', serif;">
         Not sure? Click each card to read its characteristics
       </div>
     </div>
@@ -415,7 +415,7 @@ function renderResult(shapeKey) {
     </div>
     <div class="season-name">${data.name}</div>
     <div class="season-sub">${data.oneWordSum}</div>
-    <p style="font-size:0.82rem; line-height:1.8; letter-spacing:0.03em; max-width:480px; margin:0 auto; opacity:0.85;">
+    <p style="font-size:1.2rem; line-height:1.8; letter-spacing:0.03em; max-width:480px; margin:0 auto; opacity:0.85;">
       ${data.dressingTip}
     </p>
   `;
@@ -468,7 +468,7 @@ function renderResult(shapeKey) {
   // ── Avoid
   const avoidSection = makeSection('Styles to avoid');
   avoidSection.innerHTML += `
-    <p style="font-size:0.78rem; color:var(--muted); margin-bottom:16px; line-height:1.7; letter-spacing:0.03em;">
+    <p style="font-size:1.2rem; color:var(--muted); margin-bottom:16px; line-height:1.7; letter-spacing:0.03em;">
       These styles work against your natural proportions and can make you look unbalanced.
     </p>
     <div class="traits-list">
