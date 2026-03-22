@@ -4,28 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Seasonal Color Analysis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Stoke:wght@400&family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="styles.css" rel="stylesheet" />
   <script src="/layout.js"></script>
   <link rel="icon" href="/assets/images/icon.png">
 </head>
 <body>
   <div id="main-area">
-    <div>
+    <div style="background: linear-gradient(to bottom, #FFA4A4, #FFCFCF);">
       <div class="welcome-container">
-          <h1 class="page-title">Welcome to Persona Palette!</h1>
-          <p class="welcome-text">Created by Luka He and Chloe Toda</p>
-          <p class="welcome-text">Are you ready to find your perfect color palette? Want to start... stylemaxing? Look no further and take control of your style with our personalized color analysis!</p>
-          <button class="btn btn-rose" onclick="window.location.href='/add_photo.html'">
+          <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 20px; margin-top: -80px;">
+            <img src="/assets/images/icon.png" style="width: 48px; height: 48px; object-fit: contain;" />
+            <h1 class="page-title">Welcome to<br>Persona Palette!</h1>
+          </div>
+          <p class="welcome-text" style="font-weight: bold; color: var(--deep);">Created by Luka He and Chloe Toda</p>
+          <div style="background: rgba(255, 247, 248, 0.3); border-radius: 10px; padding: 12px 20px;">
+            <p class="welcome-text" style="font-weight: bold;">Are you ready to find your perfect color palette? Want to dress to really impress? Look no further and take control of your style with our personalized color analysis!</p>
+          </div>
+          <button class="btn btn-rose" style="font-size: 1rem; margin-top: 20px; font-family: 'Cormorant Garamond', serif;" onclick="window.location.href='/add_photo.html'">
               Get Started
           </button>
-          <button onClick="handleClick()" class="btn btn-ghost">
+          <button onClick="handleClick()" class="btn btn-ghost" style="font-size: 1rem; margin-top: 10px; font-family: 'Cormorant Garamond', serif; border: none;">
               Learn More &#8595;
           </button>
       </div>
 
       <div id="learn-more-container">
-          <h2>More Information</h2>
+          <h1 class="page-title" style="margin-bottom: 20px;">Welcome to<br>Persona Palette!</h1>
+          <p class="welcome-text" style="font-weight: bold;">Persona Palette is a comprehensive styling tool that helps you look your best by analyzing your unique seasonal colors and body shape. The system provides tailored recommendations on clothing combinations, ideal metals, and flattering silhouettes while identifying specific styles to avoid. By integrating face shape and jewelry analysis, it offers a complete, data-driven approach to personal branding and professional presentation.</p>
       </div>
     </div>
   </div>

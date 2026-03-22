@@ -22,7 +22,7 @@ html, body {
   min-height: 100%;
   background: var(--cream);
   color: var(--deep);
-  font-family: 'DM Mono', monospace;
+  font-family: 'Cormorant Garamond', serif;
   font-size: 15px;
   padding-top: 40px; /* Account for fixed header */
 }
@@ -34,7 +34,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #ffe2e2;
+    background: transparent;
 }
 
 #learn-more-container {
@@ -43,13 +43,14 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: white;
+    background: transparent;
 }
 
 .welcome-text {
     max-width: 600px;
     text-align: center;
     font-size: 1.1rem;
+    font-family: 'Cormorant Garamond', serif;
     color: var(--muted);
     line-height: 1.8;
     letter-spacing: 0.03em;
@@ -65,12 +66,12 @@ html, body {
 
 header {
   width: 100%;
-  /* padding: 28px 40px 20px; */
-  padding:30px;
+  padding: 30px;
   display: flex;
   align-items: baseline;
   gap: 16px;
   border-bottom: 1px solid var(--border);
+  background: linear-gradient(to right, #FCF9EA, #FFF7F8);
 }
 header h1 {
   font-family: 'Cormorant Garamond', serif;
@@ -110,9 +111,9 @@ main {
 
 /* Typography */
 .page-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Stoke', serif;
   font-size: 2.4rem;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.04em;
   text-align: center;
   line-height: 1.2;
@@ -238,16 +239,18 @@ main {
   color: var(--cream);
 }
 .btn-rose {
-  background: var(--blush);
-  color: var(--deep);
+  background: #8f6b6b;
+  color: #FFF7F8;
+  font-weight: bold;
 }
 .btn-ghost {
-  background: transparent;
-  color: var(--muted);
-  border: 1px solid var(--border);
+  background: rgba(255, 247, 248, 0.5);
+  color: var(--deep);
+  border: 1px solid rgba(255, 247, 248, 0.5);
+  font-weight: bold;
 }
 .btn-ghost:hover {
-  border-color: var(--muted);
+  border-color: rgba(255, 247, 248, 0.5);
   color: var(--deep);
 }
 .btn-row {

@@ -316,7 +316,6 @@ function hexToHsl(hex) {
   return rgbToHsl(r,g,b);
 }
 
-// Rotate hue by degrees
 function rotateHue(hex, deg) {
   const {h,s,l}=hexToHsl(hex);
   return hslToHex((h+deg+360)%360, s, l);
@@ -329,19 +328,16 @@ function hslToHex(h,s,l) {
   return '#'+f(0)+f(8)+f(4);
 }
 
-// Perceived brightness (0-255)
 function brightness(hex) {
   const {r,g,b}=hexToRgb(hex);
   return (r*299+g*587+b*114)/1000;
 }
 
-// Warm vs cool: positive = warm, negative = cool
 function warmthScore(hex) {
   const {r,g,b}=hexToRgb(hex);
-  return (r - b);  // warm colors have more red, cool have more blue
+  return (r - b);
 }
 
-// Chroma / saturation-like
 function chroma(hex) {
   const {r,g,b}=hexToRgb(hex);
   return Math.max(r,g,b)-Math.min(r,g,b);
@@ -353,7 +349,6 @@ function chroma(hex) {
 function classifySeason(colors) {
   const { eyes, lips, face, hair } = colors;
 
-  // Compute characteristics from skin (face) as primary, with other features as context
   const faceHsl   = hexToHsl(face);
   const hairHsl   = hexToHsl(hair);
   const eyesHsl   = hexToHsl(eyes);
@@ -368,13 +363,8 @@ function classifySeason(colors) {
   const hairChroma   = chroma(hair);
   const eyesSat      = eyesHsl.s;
 
-  // Contrast: difference between skin brightness and hair brightness
   const contrast = Math.abs(skinBright - hairBright);
-
-  // Depth: overall darkness
   const avgBright = (skinBright + hairBright) / 2;
-
-  // Muted vs vivid
   const avgChroma = (skinChroma + hairChroma) / 2;
 
   const isWarm   = avgWarmth > 15;
@@ -385,7 +375,6 @@ function classifySeason(colors) {
   const isMuted  = avgChroma < 30;
   const isHighContrast = contrast > 60;
 
-  // Season scoring
   const scores = {
     spring:  0,
     summer:  0,
@@ -402,14 +391,12 @@ function classifySeason(colors) {
   if (isHighContrast) { scores.winter += 2; }
   if (!isHighContrast && isLight) { scores.summer += 1; scores.spring += 1; }
 
-  // Skin undertone hue nudge
-  if (faceHsl.h > 20 && faceHsl.h < 50) { scores.spring += 1; scores.autumn += 1; } // golden
-  if (faceHsl.h > 0  && faceHsl.h < 20) { scores.autumn += 1; }                     // copper/red
-  if (faceHsl.h > 180) { scores.winter += 1; scores.summer += 1; }                  // pink/cool
+  if (faceHsl.h > 20 && faceHsl.h < 50) { scores.spring += 1; scores.autumn += 1; }
+  if (faceHsl.h > 0  && faceHsl.h < 20) { scores.autumn += 1; }
+  if (faceHsl.h > 180) { scores.winter += 1; scores.summer += 1; }
 
   const season = Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
 
-  // Sub-season (second highest score shapes tone)
   const sorted = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
   const runner = sorted[1][0];
 
@@ -458,7 +445,6 @@ function generateHarmonies(baseHex) {
   };
 }
 
-
 /* ═══════════════════════════════════════════════════
    PAGE RENDER
 ═══════════════════════════════════════════════════ */
@@ -476,7 +462,7 @@ if (!storedColors) {
     </div>`;
 } else {
   const colors = JSON.parse(storedColors);
-  setTimeout(() => renderAnalysis(colors), 400); // brief loading feel
+  setTimeout(() => renderAnalysis(colors), 400);
 }
 
 function renderAnalysis(colors) {
@@ -498,7 +484,7 @@ function renderAnalysis(colors) {
       ${data.emoji} Your season
     </div>
     <div class="season-name">${result.subSeason}</div>
-    <div class="season-sub" style="font-style:normal; font-size:1rem; letter-spacing:0.14em;  opacity:0.6;">${data.oneWordSum}</div>
+    <div class="season-sub" style="font-style:normal; font-size:1rem; letter-spacing:0.14em; opacity:0.6;">${data.oneWordSum}</div>
     <div class="your-colors-row">
       ${['face','eyes','lips','hair'].map(f => `
         <div class="your-color-chip">
@@ -562,9 +548,11 @@ function renderAnalysis(colors) {
     </p>
     <div class="avoid-palette-grid">
       ${data.avoid.map(c => `
-        <div class="palette-chip">
-          <div class="palette-swatch" style="background:${c.hex};">
+        <div class="avoid-chip palette-chip">
+          <div class="palette-swatch" style="background:${c.hex}; opacity:0.5; position:relative;">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1rem;color:white;text-shadow:0 1px 3px rgba(0,0,0,0.6);">✕</div>
           </div>
+          <div class="palette-name" style="opacity:0.65;">${c.name}</div>
         </div>
       `).join('')}
     </div>
@@ -621,7 +609,7 @@ function makeSection(title) {
 
 function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
-/* ── Save as image (uses canvas) ── */
+/* ── Save as image ── */
 function saveResult() {
   const hero = document.querySelector('.analysis-hero');
   if (!hero) return;
