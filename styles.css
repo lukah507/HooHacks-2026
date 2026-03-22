@@ -123,16 +123,16 @@ main {
 }
 
 .instructions {
-  max-width: 440px;
+  max-width: 500px;
   text-align: center;
-  font-size: 0.78rem;
+  font-size: 1.1rem;
   color: var(--muted);
   line-height: 1.8;
   letter-spacing: 0.03em;
 }
 .instructions strong {
   display: block;
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   color: var(--deep);
   margin-bottom: 8px;
   letter-spacing: 0.1em;
@@ -172,13 +172,13 @@ main {
   color: var(--rose);
 }
 .label-text {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--muted);
   letter-spacing: 0.06em;
 }
 .label-text span {
   display: block;
-  font-size: 0.7rem;
+  font-size: 1rem;
   margin-top: 4px;
   opacity: 0.7;
 }
