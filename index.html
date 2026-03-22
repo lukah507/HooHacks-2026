@@ -7,31 +7,34 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <link href="styles.css" rel="stylesheet" />
   <script src="/layout.js"></script>
+  <link rel="icon" href="/assets/images/icon.png">
 </head>
 <body>
+  <div id="main-area">
     <div>
-        <div class="welcome-container">
-            <h1 class="page-title">Welcome to Persona Palette!</h1>
-            <p class="welcome-text">Created by Luka He and Chloe Toda</p>
-            <p class="welcome-text">Are you ready to find your perfect color palette? Want to start... stylemaxing? Look no further and take control of your style with our personalized color analysis!</p>
-            <button class="btn btn-rose" onclick="window.location.href='/add_photo.html'">
-                Get Started
-            </button>
-            <button onClick="handleClick()" class="btn btn-ghost">
-                Learn More &#8595;
-            </button>
-        </div>
+      <div class="welcome-container">
+          <h1 class="page-title">Welcome to Persona Palette!</h1>
+          <p class="welcome-text">Created by Luka He and Chloe Toda</p>
+          <p class="welcome-text">Are you ready to find your perfect color palette? Want to start... stylemaxing? Look no further and take control of your style with our personalized color analysis!</p>
+          <button class="btn btn-rose" onclick="window.location.href='/add_photo.html'">
+              Get Started
+          </button>
+          <button onClick="handleClick()" class="btn btn-ghost">
+              Learn More &#8595;
+          </button>
+      </div>
 
-        <div id="learn-more-container">
-            <h2>More Information</h2>
-        </div>
+      <div id="learn-more-container">
+          <h2>More Information</h2>
+      </div>
     </div>
+  </div>
     
-    <script>
-        const learnMoreRef = document.getElementById("learn-more-container");
-        function handleClick() {
-             learnMoreRef.scrollIntoView({ behavior: "smooth" });
-        }
-    </script>
+  <script>
+      const learnMoreRef = document.getElementById("learn-more-container");
+      function handleClick() {
+            learnMoreRef.scrollIntoView({ behavior: "smooth" });
+      }
+  </script>
 </body>
 </html>

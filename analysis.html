@@ -6,6 +6,8 @@
   <title>Your Season — Seasonal Color Analysis</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <link href="styles.css" rel="stylesheet" />
+  <script src="/layout.js"></script>
+  <link rel="icon" href="/assets/images/icon.png">
   <style>
     /* ── Analysis page extras ── */
     .analysis-hero {
@@ -270,17 +272,14 @@
 </head>
 <body>
 <div id="app">
-  <header>
-    <h1>Seasonal Color Analysis</h1>
-    <span>hoo hacks 2026</span>
-  </header>
-
-  <main id="main-content" style="max-width:760px; padding-bottom:80px;">
-    <div class="loading-state">
-      <div class="loading-spinner"></div>
-      Analysing your colours…
-    </div>
-  </main>
+  <div id="main-area">
+    <main id="main-content" style="max-width:760px; padding-bottom:80px;">
+      <div class="loading-state">
+        <div class="loading-spinner"></div>
+        Analysing your colours…
+      </div>
+    </main>
+  </div>
 </div>
 
 <script src="season-data.js"></script>

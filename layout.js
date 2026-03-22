@@ -5,8 +5,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     if (document.body.classList.contains("no-layout")) return;
     
-    const main_content = document.getElementById('main');
-    main_content.insertAdjacentHTML('beforebegin', headerEl);
+    document.body.insertAdjacentHTML('beforebegin', headerEl);
 
     initActiveLinks();
 });
@@ -57,8 +56,7 @@ const nesting = getNestingString();
  */
 
 const headerEl = `
-	<header id='header'>
-        <div id="title-container">
-            <h1 id="website-title"><a href="/index.html" style="text-decoration:none; color:black;">Persona Palette</a></h1>
-        </div>
+	<header id='header' style="position: fixed; top: 0; left: 0; right: 0; background-color: var(--cream); z-index: 100; width: 100%; padding: 28px 40px 20px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--border);">
+        <img src="/assets/images/heading-icon.png" style="width: 27px; height: 100%;" />
+        <h1 style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 1.8rem; letter-spacing: 0.06em;"><a href="/index.html" style="text-decoration:none; color: var(--deep); vertical-align: top;">Persona Palette</a></h1>
     </header>`;
