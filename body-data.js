@@ -3,7 +3,7 @@ const BODY_DATA = {
   hourglass: {
     name: 'Hourglass',
     emoji: '⌛',
-    tagline: 'defined waist with equal bust and hips',
+    tagline: 'Defined waist with equal bust and hips',
     heroGradient: 'linear-gradient(135deg, #FFF0F5 0%, #F2C4C4 40%, #D97B7B 100%)',
     textColor: '#2B1A1A',
     badgeBg: '#F2C4C4',
@@ -59,7 +59,7 @@ const BODY_DATA = {
   triangle: {
     name: 'Triangle',
     emoji: '🔺',
-    tagline: 'bust and waist narrower than hips',
+    tagline: 'Bust and waist narrower than hips',
     heroGradient: 'linear-gradient(135deg, #FFF8E1 0%, #FFE082 40%, #FFB300 100%)',
     textColor: '#3E2723',
     badgeBg: '#FFE082',
@@ -115,7 +115,7 @@ const BODY_DATA = {
   inverted_triangle: {
     name: 'Inverted Triangle',
     emoji: '🔻',
-    tagline: 'broad shouldered with narrow hips',
+    tagline: 'Broad shouldered with narrow hips',
     heroGradient: 'linear-gradient(135deg, #E8F5E9 0%, #A5D6A7 40%, #66BB6A 100%)',
     textColor: '#1B5E20',
     badgeBg: '#A5D6A7',
@@ -171,7 +171,7 @@ const BODY_DATA = {
   rectangle: {
     name: 'Rectangle',
     emoji: '▬',
-    tagline: 'straight waisted with equal bust and hips',
+    tagline: 'Straight waisted with equal bust and hips',
     heroGradient: 'linear-gradient(135deg, #E3F2FD 0%, #90CAF9 40%, #42A5F5 100%)',
     textColor: '#0D47A1',
     badgeBg: '#90CAF9',
@@ -227,7 +227,7 @@ const BODY_DATA = {
   oval: {
     name: 'Oval',
     emoji: '🥚',
-    tagline: 'waist wider than bust and hips',
+    tagline: 'Waist wider than bust and hips',
     heroGradient: 'linear-gradient(135deg, #F3E5F5 0%, #CE93D8 40%, #AB47BC 100%)',
     textColor: '#1A0027',
     badgeBg: '#CE93D8',
