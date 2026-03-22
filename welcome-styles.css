@@ -58,9 +58,9 @@ html, body {
 }
 
 .rainbow {
-  font-size: 10rem;
+  font-size: 5rem;
   text-align: center;
-  margin-top: -6rem;
+  margin-top: -1rem;
   opacity: 0.9;
 }
 
@@ -82,7 +82,6 @@ html, body {
     color: var(--deep);
     line-height: 1.8;
     letter-spacing: 0.03em;
-    font-weight: bolder;
 }
 
 /* Layout */
@@ -139,16 +138,39 @@ header h1 {
   align-items: center;
   justify-content: center;
   flex-direction: row;
+  gap: 1rem;
 }
 
 .flex-child {
-    width: 30%;
+    max-width: 27%;
     height: 100%;
     border-radius: 15px;
     background-color: rgba(255,255,255,0.5);
-    padding: 1rem;
+    padding: 2rem;
     margin: 1rem;
     align-items: center;
     justify-content: center;
     display: flex;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.flex-child:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.list-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.bold {
+    font-weight: bold;
+    size: 1.1rem;
+}
+
+li {
+  text-align: left;
 }
